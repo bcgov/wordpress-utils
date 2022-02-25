@@ -3,7 +3,7 @@
  * Composer Scripts
  *
  * @author  WordPress <govwordpress@gov.bc.ca>
- * @license MIT
+ * @license https://opensource.org/licenses/MIT MIT
  */
 namespace Bcgov\Script;
 
@@ -16,6 +16,8 @@ use Bcgov\Script\Tests;
 
 class Checklists
 {
+
+
     /**
      * Checklist for post production.
      *
@@ -41,7 +43,7 @@ class Checklists
             'testJs'  => 'Javascript tests failed.',
         ];
         // If checklist is not created via production script, give warning to ensure composer production.
-        if ('production' !== $event->getName()) {
+        if ($event->getName() !== 'production') {
             $io->write(self::console('Ensure that you run `composer production`', 'warning'));
         }
 
@@ -51,19 +53,19 @@ class Checklists
         foreach ($checks as $check => $errorMsg) {
             $result = 0;
             $item   = '';
-            if ('phpcs' === $check) {
+            if ($check === 'phpcs') {
                 $result = Standards::phpWordPressCodingStandards($event, false);
                 $item   = '* [%s] Verified coding standards (phpcs)';
-            } else if ('phpUnit' === $check) {
+            } else if ($check === 'phpUnit') {
                 $result = Tests::phpunit($event, true);
                 $item   = '* [%s] Run PHP tests';
-            } else if ('lintJs' === $check) {
+            } else if ($check === 'lintJs') {
                 $result = Standards::npm($event, 'lint:js', true);
                 $item   = '* [%s] Lint javascript';
-            } else if ('lintCss' === $check) {
+            } else if ($check === 'lintCss') {
                 $result = Standards::npm($event, 'lint:css', true);
                 $item   = '* [%s] Lint CSS';
-            } else if ('testJs' === $check) {
+            } else if ($check === 'testJs') {
                 $result = Standards::npm($event, 'test', true);
                 $item   = '* [%s] Javascript Tests';
             }
@@ -129,7 +131,7 @@ class Checklists
     private static function getCheckmarkType(int $status): string
     {
         $output = 'Fail';
-        if (0 === $status) {
+        if ($status === 0) {
             $output = '✓';
         }
 
@@ -157,6 +159,27 @@ class Checklists
         echo implode("\n", $checklist)."\n\n";
 
     }//end postProductionChecksForCommon()
+
+
+    /**
+     * Checklist for post production for Scripts.
+     *
+     * @return void
+     */
+    public static function postProductionChecksForScripts(): void
+    {
+        $checklist = [
+            '[] Updated version in composer.json',
+            '[] Updated CHANGELOG.md to include jira ticket',
+            '[] Updated README.md for new functionality',
+            '[] Verified coding standards (phpcs)',
+            '[] Run PHP tests',
+        ];
+
+        echo "****** CHECKLIST ******\n\n";
+        echo implode("\n", $checklist)."\n\n";
+
+    }//end postProductionChecksForScripts()
 
 
     /**
