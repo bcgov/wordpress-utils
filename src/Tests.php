@@ -3,7 +3,7 @@
  * Composer Scripts
  *
  * @author  WordPress <govwordpress@gov.bc.ca>
- * @license MIT
+ * @license https://opensource.org/licenses/MIT MIT
  */
 namespace Bcgov\Script;
 
@@ -14,6 +14,7 @@ use Composer\IO\IOInterface;
 
 class Tests
 {
+
 
     /**
      * The PHPUnit script for testing php.
@@ -27,7 +28,7 @@ class Tests
     {
         $config    = $event->getComposer()->getConfig();
         $vendorDir = $config->get('vendor-dir');
-        $phpunit   = "{$vendorDir}/bcgov/wordpress-scripts/vendor/bin/phpunit";
+        $phpunit   = "{$vendorDir}/bin/phpunit";
         $xml       = "{$vendorDir}/../phpunit.xml";
         $io        = $event->getIO();
         $process   = new ProcessExecutor($io);

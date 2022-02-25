@@ -18,15 +18,11 @@
     "scripts": {
        
         "phpcs": [
-            "./vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs/ --config-set error_severity 1 -i;",
-            "./vendor/bin/phpcs -ps --standard=./wordpress.xml --ignore=*src/Theme/blade/* --colors ./ &2>/dev/null;",
-            "./vendor/bin/phpcs -ps --colors ./src/Scripts.php &2>/dev/null;"
+            "./vendor/bin/phpcs --config-set --config-set error_severity 1 -i;",
+            "./vendor/bin/phpcs -ps --colors ./ &2>/dev/null;"
         ],
         "phpcbf": [
-            "./vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs/",
-            "./vendor/bin/phpcbf -ps --standard=./wordpress.xml --colors ./ &2>/dev/null;",
-            "./vendor/bin/phpcbf -ps --colors ./src/Scripts.php &2>/dev/null;",
-            "@phpcs"
+            "./vendor/bin/phpcbf -ps --colors ./ &2>/dev/null;"
         ],
         "test": [
             "./vendor/bin/phpunit"
@@ -35,7 +31,7 @@
             "./vendor/bin/phpunit --coverage-html ./coverage/php/"
         ],
         "checklist": [
-            "Bcgov\\Script\\Checklists::postProductionChecksForCommon"
+            "Bcgov\\Script\\Checklists::postProductionChecksForScripts"
         ]
 
     },

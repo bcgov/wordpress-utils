@@ -4,6 +4,8 @@
 This should be included as dev dependency for all themes and plugins, which will then give coding standards, testing and checklists.
 
 
+
+
 ## Classes
 
 ### \Bcgov\Script
@@ -31,6 +33,9 @@ This is used to create a checklist, which creates a checklist.md in your root of
 Typical composer.json for theme / plugin
 
 ```
+"require-dev": {
+    "bcgov/wordpress-scripts": "@dev"
+},
 "scripts" : {
     "setup": [
         "npm i",

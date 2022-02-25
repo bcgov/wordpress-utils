@@ -3,7 +3,7 @@
  * Composer Scripts
  *
  * @author  WordPress <govwordpress@gov.bc.ca>
- * @license MIT
+ * @license https://opensource.org/licenses/MIT MIT
  */
 namespace Bcgov\Script;
 
@@ -14,6 +14,8 @@ use Composer\IO\IOInterface;
 
 class Standards
 {
+
+
     /**
      * Performs WordPress theme and plugin coding standards based on WordPress's coding standards.
      *
@@ -50,23 +52,23 @@ class Standards
      *
      * @return int
      */
-    private static function phpWordPressCodingStandards(Event $event, bool $fix=false): int
+    public static function phpWordPressCodingStandards(Event $event, bool $fix=false): int
     {
         $config    = $event->getComposer()->getConfig();
         $vendorDir = $config->get('vendor-dir');
-        $phpcs     = "{$vendorDir}/bcgov/wordpress-scripts/vendor/bin/phpcs";
-        $phpcbf    = "{$vendorDir}/bcgov/wordpress-scripts/vendor/bin/phpcbf";
+        $phpcs     = "{$vendorDir}/bin/phpcs";
+        $phpcbf    = "{$vendorDir}/bin/phpcbf";
         $source    = "{$vendorDir}/../";
         $io        = $event->getIO();
         $process   = new ProcessExecutor($io);
         $result    = false;
         $sniffs    = '';
 
-        if (('production' === $event->getName()) || ('checklist' === $event->getName())) {
+        if (($event->getName() === 'production') || ($event->getName()) === 'checklist') {
             $sniffs .= "--exclude=Generic.Commenting.Todo";
         }
 
-        $process->execute("{$phpcs} --config-set installed_paths vendor/bcgov/wordpress-scripts/vendor/wp-coding-standards/wpcs/");
+        $process->execute("{$phpcs} --config-set installed_paths vendor/wp-coding-standards/wpcs/");
         if ($fix) {
             $result = $process->execute("{$phpcbf} -ps --standard=./vendor/bcgov/wordpress-scripts/wordpress.xml --colors {$source}");
         } else {
@@ -76,6 +78,7 @@ class Standards
         return $result;
 
     }//end phpWordPressCodingStandards()
+
 
     /**
      * Npm functions used as part of the checklist system
@@ -100,5 +103,6 @@ class Standards
         return $result;
 
     }//end npm()
+
 
 }//end class
