@@ -1,0 +1,47 @@
+{
+    "name": "bcgov/wordpress-scripts",
+    "version": "1.0.0",
+    "require": {
+        "php": ">=7.4",
+        "composer/installers": "~1.0",
+        "wp-coding-standards/wpcs": "~2.2",
+        "phpunit/phpunit": "^9.5",
+        "brain/monkey": "^2.6"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "Bcgov\\Script\\": "src/"
+        }
+    
+    },
+    "scripts": {
+       
+        "phpcs": [
+            "./vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs/ --config-set error_severity 1 -i;",
+            "./vendor/bin/phpcs -ps --standard=./wordpress.xml --ignore=*src/Theme/blade/* --colors ./ &2>/dev/null;",
+            "./vendor/bin/phpcs -ps --colors ./src/Scripts.php &2>/dev/null;"
+        ],
+        "phpcbf": [
+            "./vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs/",
+            "./vendor/bin/phpcbf -ps --standard=./wordpress.xml --colors ./ &2>/dev/null;",
+            "./vendor/bin/phpcbf -ps --colors ./src/Scripts.php &2>/dev/null;",
+            "@phpcs"
+        ],
+        "test": [
+            "./vendor/bin/phpunit"
+        ],
+        "coverage": [
+            "./vendor/bin/phpunit --coverage-html ./coverage/php/"
+        ],
+        "checklist": [
+            "Bcgov\\Script\\Checklists::postProductionChecksForCommon"
+        ]
+
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/installers": false
+        }
+    }
+}
