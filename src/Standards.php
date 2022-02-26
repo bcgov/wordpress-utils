@@ -61,7 +61,7 @@ class Standards
         $source    = "{$vendorDir}/../";
         $io        = $event->getIO();
         $process   = new ProcessExecutor($io);
-        $result    = false;
+        $result    = 0;
         $sniffs    = '';
 
         if (($event->getName() === 'production') || ($event->getName()) === 'checklist') {
@@ -92,10 +92,6 @@ class Standards
     public static function npm(Event $event, string $cmd, bool $silent=false): int
     {
         $result    = 0;
-        $config    = $event->getComposer()->getConfig();
-        $vendorDir = $config->get('vendor-dir');
-        $phpunit   = "{$vendorDir}/bcgov/wordpress-scripts/vendor/bin/phpunit";
-        $source    = "{$vendorDir}/../";
         $io        = $event->getIO();
         $process   = new ProcessExecutor($io);
         $redirect  = $silent ? '&>/dev/null' : '';

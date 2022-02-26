@@ -32,7 +32,6 @@ class Tests
         $xml       = "{$vendorDir}/../phpunit.xml";
         $io        = $event->getIO();
         $process   = new ProcessExecutor($io);
-        $result    = false;
         $redirect  = $silent ? '&>/dev/null' : '';
         $result    = $process->execute("{$phpunit} --configuration {$xml} --coverage-text {$redirect}");
         return $result;
