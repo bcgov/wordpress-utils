@@ -50,16 +50,16 @@ Typical composer.json for theme / plugin
         "@checklist"
     ],
     "checklist" : [
-        "Bcgov\Script\Checklists::postProductionChecks"
+        "Bcgov\\Script\\Checklists::postProductionChecks"
     ],
     "phpcs": [
-        "Bcgov\Script\Standards::phpcs"
+        "Bcgov\\Script\\Standards::phpcs"
     ],
     "phpcbf": [
-        "Bcgov\Script\Standards::phpcbf"
+        "Bcgov\\Script\\Standards::phpcbf"
     ],
     "test": [
-        "Bcgov\Script\Tests::phpunit"
+        "Bcgov\\Script\\Tests::phpunit"
     ],
     "coverage": [
         "./vendor/bcgov/scripts/vendor/bin/phpunit --coverage-html ./coverage/php/"
