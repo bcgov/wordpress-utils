@@ -28,7 +28,7 @@ class Checklists
     public static function postProductionChecks(Event $event): void
     {
         $io            = $event->getIO();
-        $checklistFile = $event->getComposer()->getConfig()->get('vendor-dir').'/../checklist.md';
+        $checklistFile = escapeshellarg($event->getComposer()->getConfig()->get('vendor-dir').'/../checklist.md');
         $success       = true;
         $process       = new ProcessExecutor($io);
 
