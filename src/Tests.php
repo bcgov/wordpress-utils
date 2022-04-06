@@ -27,7 +27,7 @@ class Tests
     public static function phpunit(Event $event, bool $silent=false): int
     {
         $config    = $event->getComposer()->getConfig();
-        $vendorDir = $config->get('vendor-dir');
+        $vendorDir = escapeshellarg($config->get('vendor-dir'));
         $phpunit   = "{$vendorDir}/bin/phpunit";
         $xml       = "{$vendorDir}/../phpunit.xml";
         $io        = $event->getIO();
