@@ -97,7 +97,24 @@ class Checklists
                 'changelog' => $io->select('Did you update the CHANGELOG.md to include jira tickets? (Default Yes)', $selectChoices, 'yes'),
                 'readme'    => $io->select('Update README.md if applicable? (Default Yes)', $selectChoices, 'yes'),
                 'assets'    => $io->select('Built assets if applicable? (Default Yes)', $selectChoices, 'yes'),
+                'documentation' => $io->select('Does/did documentation need to be updated? (Default No)', $selectChoices, 'no'),
             ];
+            // If documentation needs to be updated, is a new JIRA ticket needed?
+            if ( 'yes' === $confirm->documentation ) {
+                $confirm->newTicketNeeded = $io->select('Is a separate ticket required for the documentation? (Default No)', $selectChoices, 'no');
+            };
+            // If a new ticket is needed, we need to get the ticket ID.
+            if ( isset( $confirm->newTicketNeeded ) && 'yes' === $confirm->newTicketNeeded ) {
+                $confirm->newTicketId = $io->ask('Please enter the ticket ID: ');
+            };
+            // Now we can determine the value of $confirm->documentation (either 'N/A', 'Updated', or a ticket ID)
+            if ( 'no' === $confirm->documentation ) {
+                $confirm->documentation = 'N/A';
+            } else if ( 'yes' === $confirm->documentation && isset( $confirm->newTicketNeeded ) && 'no' === $confirm->newTicketNeeded ) {
+                $confirm->documentation = 'Updated';
+            } else {
+                $confirm->documentation = $confirm->newTicketId;
+            };
             $checklist     = array_merge(
                 [
                     "* [{$confirm->composer}] Updated version in composer.json",
@@ -105,6 +122,7 @@ class Checklists
                     "* [{$confirm->changelog}] Updated CHANGELOG.md to include jira ticket",
                     "* [{$confirm->readme}] Updated README.md for new functionality",
                     "* [{$confirm->assets}] Built assets for production (npm run build:production)",
+                    "* [{$confirm->documentation}] Updated the documentation (N/A, Updated, or a ticket ID)",
                 ],
                 $checklist
             );
