@@ -95,7 +95,7 @@ class Checklists
                 'composer'  => $io->select('Is your version in composer.json the correct version? (Default Yes)', $selectChoices, 'yes'),
                 'style'     => $io->select('Is your version in your style.css or plugin file the correct version? (Default Yes)', $selectChoices, 'yes'),
                 'changelog' => $io->select('Did you update the CHANGELOG.md to include jira tickets? (Default Yes)', $selectChoices, 'yes'),
-                'readme'    => $io->select('Update README.md if applicable? (Default Yes)', $selectChoices, 'yes'),
+                'readme'    => $io->select('Update README.md if applicable? (Default No)', $selectChoices, 'no'),
                 'assets'    => $io->select('Built assets if applicable? (Default Yes)', $selectChoices, 'yes'),
                 'documentation' => $io->select('Does/did documentation need to be updated? (Default No)', $selectChoices, 'no'),
             ];

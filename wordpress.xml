@@ -51,6 +51,7 @@
 	<rule ref="Generic.Commenting.Todo"/>
 	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent.SpacesUsed" ><severity>0</severity></rule>
 	<rule ref="Generic.Arrays.DisallowShortArraySyntax.Found" ><severity>0</severity></rule>
+    <rule ref="Generic.WhiteSpace.DisallowTabIndent"><type>warning</type><severity>0</severity></rule>
 	<rule ref="Squiz.Commenting.FileComment.Missing"><severity>0</severity></rule>
 	<rule ref="Squiz.Commenting.FileComment.SpacingAfterComment"><severity>0</severity></rule>
   	<rule ref="WordPress.WP.I18n.TextDomainMismatch"><severity>0</severity></rule>
