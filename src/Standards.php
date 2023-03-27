@@ -70,7 +70,9 @@ class Standards
 
         $process->execute("{$phpcs} --config-set installed_paths vendor/wp-coding-standards/wpcs/");
         if ($fix) {
-            $result = $process->execute("{$phpcbf} -ps --standard=./vendor/bcgov/wordpress-scripts/wordpress.xml --colors {$source}");
+            $result = $process->execute("{$phpcbf} -pn --standard=./vendor/bcgov/wordpress-scripts/wordpress.xml --colors {$source}");
+            $io->write("<info>To convert all tabs to spaces run the following command:</info>");
+            $io->write("{$phpcbf} -p --standard=./vendor/bcgov/wordpress-scripts/wordpress.xml --colors {$source}\n");
         } else {
             $result = $process->execute("{$phpcs} -ps --standard=./vendor/bcgov/wordpress-scripts/wordpress.xml  --colors {$sniffs} {$source}");
         }
