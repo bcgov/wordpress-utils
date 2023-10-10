@@ -4,7 +4,7 @@
     "require": {
         "php": ">=7.4",
         "composer/installers": "~1.0",
-        "wp-coding-standards/wpcs": "~2.2",
+        "wp-coding-standards/wpcs": "~3.0",
         "phpunit/phpunit": "^9.5",
         "brain/monkey": "^2.6"
     },
@@ -13,10 +13,10 @@
         "psr-4": {
             "Bcgov\\Script\\": "src/"
         }
-    
+
     },
     "scripts": {
-       
+
         "phpcs": [
             "./vendor/bin/phpcs --config-set --config-set error_severity 1 -i;",
             "./vendor/bin/phpcs -ps --colors ./ &2>/dev/null;"
@@ -37,7 +37,8 @@
     },
     "config": {
         "allow-plugins": {
-            "composer/installers": false
+            "composer/installers": false,
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     }
 }
