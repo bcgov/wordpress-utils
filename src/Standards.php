@@ -78,16 +78,22 @@ class Standards
             '"bcgov/wordpress-common": "@dev",',
             '"bcgov/wordpress-scripts": "1.1.1"',
         ];
+        $readme_lines        = [
+            '<warning>, See the section entitled: "Why you should use the latest version of this package</warning>',
+            '<warning>in the README https://apps.itsm.gov.bc.ca/bitbucket/projects/WP/repos/wordpress-scripts/browse/README.md</warning>',
+        ];
+
         $confirm = (object) [
             'upgrade' => $io->select('Would you like to upgrade your composer.json to use the new WordPress coding standards? (Default No)', $options, 'no'),
         ];
+
+        // Prompt the user whether they want to upgrade, then explain how & why.
         if ($confirm->upgrade === 'no') {
             $io->write('<warning>for the existing standard, the tag you want is "1.1.1". Edit your composer.json like so:');
-            $io->write(lines);
-            $io->write('<warning>, See the section entitled: "Why you should use the latest version of this package" in the README at https://apps.itsm.gov.bc.ca/bitbucket/projects/WP/repos/wordpress-scripts/browse/README.md</warning>');
+            $io->write($composer_json_lines);
+            $io->write($readme_lines);
             return $result;
         };
-            return $result;
 
         if ($fix) {
             $result = $process->execute("{$phpcbf} -pn --standard=./vendor/bcgov/wordpress-scripts/wordpress.xml --colors {$source}");
