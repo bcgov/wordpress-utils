@@ -4,9 +4,9 @@
     "require": {
         "php": ">=7.4",
         "composer/installers": "~1.0",
+        "wp-coding-standards/wpcs": "^3.0",
         "phpunit/phpunit": "^9.5",
-        "brain/monkey": "^2.6",
-        "phpcsstandards/phpcsutils": "^1.0"
+        "brain/monkey": "^2.6"
     },
 
     "autoload": {
@@ -42,6 +42,6 @@
         }
     },
     "require-dev": {
-        "wp-coding-standards/wpcs": "^3.0.0"
+        "phpcsstandards/phpcsutils": "^1.0"
     }
 }
