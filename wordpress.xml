@@ -21,7 +21,7 @@
 
 	<!-- Until a better solution comes to code check blade files. -->
 	<exclude-pattern>*.blade.php</exclude-pattern>
-    
+
 
 	<!-- Include the WordPress-Extra standard. -->
 	<rule ref="WordPress-Extra">
@@ -55,7 +55,7 @@
 	<rule ref="Squiz.Commenting.FileComment.Missing"><severity>0</severity></rule>
 	<rule ref="Squiz.Commenting.FileComment.SpacingAfterComment"><severity>0</severity></rule>
   	<rule ref="WordPress.WP.I18n.TextDomainMismatch"><severity>0</severity></rule>
-	<rule ref="WordPress.WhiteSpace.PrecisionAlignment.Found"><severity>0</severity></rule>
+	<rule ref="Universal.WhiteSpace.PrecisionAlignment.Found"><severity>0</severity></rule>
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound"><severity>0</severity></rule>
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound"><severity>0</severity></rule>
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound"><severity>0</severity></rule>
@@ -65,7 +65,7 @@
 	<rule ref="WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase"><severity>0</severity></rule>
 	<rule ref="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase"><severity>warning</severity></rule>
 	<rule ref="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase"><severity>warning</severity></rule>
-	
+
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound"><severity>0</severity></rule>
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound"><severity>0</severity></rule>
 	<rule ref="WordPress.NamingConventions.ValidHookName.UseUnderscores"><severity>0</severity></rule>
