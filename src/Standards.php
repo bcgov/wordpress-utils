@@ -67,6 +67,8 @@ class Standards
         if (($event->getName() === 'production') || ($event->getName()) === 'checklist') {
             $sniffs .= "--exclude=Generic.Commenting.Todo";
         }
+        // add an info here to let the user know
+        $io->write('<warning>you should upgrade your composer.json "bcgov/wordpress-scripts": "1.X" to "2.x" </warning>');
 
         if ($fix) {
             $result = $process->execute("{$phpcbf} -pn --standard=./vendor/bcgov/wordpress-scripts/wordpress.xml --colors {$source}");
