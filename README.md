@@ -68,6 +68,16 @@ Typical composer.json for theme / plugin
 }
 ```
 
+## Why you should use the latest version of this package
+
+(_currently using the ^3.0.0 of wordpress-coding-standards_)
+
+1. the latest version of the package has the latest version of the coding standards
+2. this set of standards is compliant with the latest version of php (8.2.x)
+3. the warnings/errors are more accurate and up to date
+
+### see this link for more info: https://make.wordpress.org/core/2023/08/21/wordpresscs-3-0-0-is-now-available/
+
 ## How to force-sync Satis packages to test your changes locally
 
 ### get onto the satis server
