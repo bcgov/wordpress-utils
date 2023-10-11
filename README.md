@@ -84,10 +84,26 @@ ssh-keygen -t rsa -b 4096
 cat ~/.ssh/id_rsa.pub > your_public_key
 ```
 
-- you will need to have your ssh key added to the server manually by supervisor or admin
+- give the public key to your supervisor or admin
+- you will need to have your ssh key added to the server by someone with access to the server
 
 ### run the script to force-sync the packages
 
 ```shell
  /data/scripts/satis-rebuild.sh https://apps.itsm.gov.bc.ca/bitbucket/scm/wp/wordpress-scripts.git
+```
+
+You should see something like this:
+
+```shell
+Creating local downloads in '/data/www-app/satis-new/dist'
+Dumping package 'bcgov/wordpress-scripts' in version 'dev-feature/descw-1503_coding-standards-v3'.
+  - Installing bcgov/wordpress-scripts (dev-feature/descw-1503_coding-standards-v3 af9c323): Cloning af9c323d22
+...
+...
+...
+Writing packages.json
+Pruning include directories
+Deleted /data/www-app/satis-new/include/all$05c4eeb08d6e7fceaaa435dfe290ee67fcfad040.json
+Writing web view
 ```
