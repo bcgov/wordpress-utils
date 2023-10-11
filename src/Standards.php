@@ -75,14 +75,12 @@ class Standards
         ];
         $composer_json_lines = [
             '"require-dev": {',
-            '"bcgov/wordpress-common": "@dev",',
             '"bcgov/wordpress-scripts": "1.1.1"',
             '}',
             ' ',
         ];
         $readme_lines        = [
-            '<warning>See the section in the wordpress-scripts README entitled: "Why you should use the latest version of this package</warning>',
-            'here: https://apps.itsm.gov.bc.ca/bitbucket/projects/WP/repos/wordpress-scripts/browse/README.md',
+            '<warning>See: https://apps.itsm.gov.bc.ca/bitbucket/projects/WP/repos/wordpress-scripts/browse/README.md "Why you should use the latest version of this package"</warning>',
         ];
 
         $confirm = (object) [
@@ -91,7 +89,7 @@ class Standards
 
         // Prompt the user whether they want to upgrade, then explain how & why.
         if ($confirm->upgrade === 'no') {
-            $io->write('<warning>for the existing standard, the tag you want is "1.1.1". Edit your composer.json like so:</warning>');
+            $io->write('<warning>To use the current standard (v1.1.1), change your require-dev in composer.json like so:</warning>');
             $io->write($composer_json_lines);
             $io->write($readme_lines);
             return $result;
