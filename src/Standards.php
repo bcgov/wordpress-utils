@@ -67,8 +67,18 @@ class Standards
         if (($event->getName() === 'production') || ($event->getName()) === 'checklist') {
             $sniffs .= "--exclude=Generic.Commenting.Todo";
         }
-        // add an info here to let the user know
-        $io->write('<warning>you should upgrade your composer.json "bcgov/wordpress-scripts": "1.X" to "2.x" </warning>');
+        // add an info here to let the user know about their composer.json wordpress standards options
+        $options = [
+            'yes' => 'yes',
+            'no' => 'no',
+        ];
+        $confirm = (object) [
+            'upgrade' => $io->select('Would you like to upgrade your composer.json to use the new WordPress coding standards? (Default No)', $options, 'no'),
+        ];
+        if( 'no' === $confirm->upgrade) {
+            $io->write('<warning>for the existing standard, the tag you want is 1.1.1, see: https://apps.itsm.gov.bc.ca/bitbucket/projects/WP/repos/wordpress-scripts/browse/README.md </warning>');
+        }
+
 
         if ($fix) {
             $result = $process->execute("{$phpcbf} -pn --standard=./vendor/bcgov/wordpress-scripts/wordpress.xml --colors {$source}");
