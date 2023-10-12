@@ -129,6 +129,10 @@ class Standards
      * Also explains:
      * - how to upgrade and why.
      * - how to prevent an upgrade in order to avoid correcting many errors
+     *
+     * @param \Composer\Script\Event $event The composer event.
+     *
+     * @return integer
      */
     public static function promptUserAboutUpgrade(Event $event): int
     {
