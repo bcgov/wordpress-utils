@@ -25,9 +25,7 @@ class Standards
      */
     public static function phpcs(Event $event): int
     {
-        self::phpWordPressCodingStandards($event);
-
-        return self::promptUserAboutUpgrade($event);
+        return self::phpWordPressCodingStandards($event);
 
     }//end phpcs()
 
@@ -96,6 +94,8 @@ class Standards
             $io->write("{$phpcbf} -p --standard=./vendor/bcgov/wordpress-scripts/wordpress.xml --colors {$source}\n");
         } else {
             $result = $process->execute("{$phpcs} -ps --standard=./vendor/bcgov/wordpress-scripts/wordpress.xml  --colors {$sniffs} {$source}");
+            // Explain how to prevent an upgrade to wordpress coding standards in order to avoid correcting many errors
+            self::promptUserAboutUpgrade($event);
         }
 
         return $result;
@@ -146,6 +146,7 @@ class Standards
             ' ',
             'For more information, read the section #why-you-should-use-the-latest-version-of-this-package here:',
             'https://apps.itsm.gov.bc.ca/bitbucket/projects/WP/repos/wordpress-scripts/browse/README.md',
+            ' ',
         ];
 
         $io->write($upgrade_message);
