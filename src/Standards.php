@@ -64,10 +64,9 @@ class Standards
         $result    = 0;
         $sniffs    = '';
 
-        if (('production' === $event->getName()) || ($event->getName()) === 'checklist') {
+        if (($event->getName() === 'production') || ($event->getName()) === 'checklist') {
             $sniffs .= "--exclude=Generic.Commenting.Todo";
         }
-
 
         if ($fix) {
             $result = $process->execute("{$phpcbf} -pn --standard=./vendor/bcgov/wordpress-scripts/wordpress.xml --colors {$source}");
@@ -120,12 +119,14 @@ class Standards
         $result = 0;
         $io     = $event->getIO();
         $upgrade_message = [
-            '<warning>Please remember to upgrade your `wordpress-scripts` to the latest version to use the new WordPress coding standards.</warning>',
+            '<warning>Please remember to upgrade your `wordpress-scripts` to the latest version to use the new WordPress coding standards!</warning>',
             ' ',
-            '<info>The default version is "@dev". It tracks the latest version, but you should pin your version number to 2.0 to avoid unexpected errors when you run composer install.',
-            'To DOWNGRADE (not recommended) to the old version wordpress-scripts, set your version number to 1.1.1 in the "require-dev" section of your composer.json',
-            'For more info on how to upgrade / downgrade your wordpress-scripts version:',
+            '<info>To UPGRADE, Pin your version number to 2.0 to avoid unexpected errors when you run `composer install`.',
+            '(the version is set to "@dev" by default: it tracks the latest version of the package).',
+            'To DOWNGRADE (not recommended) to the old version of wordpress-scripts,',
+            'set your version number to 1.1.1 in the "require-dev" section of your composer.json.',
             ' ',
+            'For more information',
             'https://apps.itsm.gov.bc.ca/bitbucket/projects/WP/repos/wordpress-scripts/browse/README.md#why-you-should-use-the-latest-version-of-this-package',
             '</info> ',
         ];
