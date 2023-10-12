@@ -77,10 +77,7 @@ class Standards
         ];
         $confirm = (object) [
             'upgrade' => $io->select(
-                [
-                    'Would you like to upgrade your composer.json to use the new WordPress coding standards?',
-                    '(Default No):',
-                ],
+                'Would you like to upgrade your composer.json to use the new WordPress coding standards? (Default No):',
                 $options,
                 'no'
             ),
