@@ -64,14 +64,10 @@ class Standards
         $result    = 0;
         $sniffs    = '';
 
-        if (($event->getName() === 'production') || ($event->getName()) === 'checklist') {
+        if (('production' === $event->getName()) || ($event->getName()) === 'checklist') {
             $sniffs .= "--exclude=Generic.Commenting.Todo";
         }
 
-        // Let the user know about their composer.json wordpress standards options.
-
-        // Prompt the user whether they want to upgrade, then explain how & why.
-            self::promptUserAboutUpgrade($event);
 
         if ($fix) {
             $result = $process->execute("{$phpcbf} -pn --standard=./vendor/bcgov/wordpress-scripts/wordpress.xml --colors {$source}");
@@ -79,7 +75,7 @@ class Standards
             $io->write("{$phpcbf} -p --standard=./vendor/bcgov/wordpress-scripts/wordpress.xml --colors {$source}\n");
         } else {
             $result = $process->execute("{$phpcs} -ps --standard=./vendor/bcgov/wordpress-scripts/wordpress.xml  --colors {$sniffs} {$source}");
-            // Remind user how to avoid fixing new linter errors caused by the upgrade.
+            // Let the user know about their composer.json wordpress standards upgrade/downgrade options.
             self::promptUserAboutUpgrade($event);
         }
 
@@ -124,32 +120,14 @@ class Standards
         $result = 0;
         $io     = $event->getIO();
         $upgrade_message = [
-            '<warning>It is recommended that you upgrade to the new WordPress coding standards.</warning>',
-            ' ',
-            '<warning>The default is: "@dev" which will use the latest version, but you should specify a version number to avoid unexpected changes.</warning>',
-            ' ',
-            'to do this, please change the version of wordpress-scripts in composer.json:',
-            ' ',
-            '"require-dev": {',
-            '...',
-            '"bcgov/wordpress-scripts": "2.0"',
-            '...',
-            '}',
-            ' ',
-            '<warning>To DOWNGRADE (not recommended) to the former standard (v1.1.1) of bcgov/wordpress-scripts : </warning>',
-            '<warning>This will prevent the new errors from being reported, but will not fix them.</warning>',
-            ' ',
-            '<warning>To DOWNGRADE the version of wordpress-scripts in composer.json:</warning>',
-            ' ',
-            '"require-dev": {',
-            '...',
-            '"bcgov/wordpress-scripts": "1.1.1"',
-            '...',
-            '}',
-            ' ',
-            'For more information, See:',
+            '<warning>You should upgrade to the new WordPress coding standards.</warning>',
+            '<info>The default is: "@dev" which will use the latest version, but you should set your version number to 2.0',
+            'in the "require-dev" section of your composer.json to avoid unexpected errors next time you run composer install.',
+            'To DOWNGRADE (not recommended) to the old version wordpress-scripts',
+            'set your version number to 1.1.1 in the "require-dev" section of your composer.json',
+            'For more info on how to upgrade / downgrade your wordpress-scripts version, see:',
             'https://apps.itsm.gov.bc.ca/bitbucket/projects/WP/repos/wordpress-scripts/browse/README.md#why-you-should-use-the-latest-version-of-this-package',
-            ' ',
+            '</info> ',
         ];
 
         $io->write($upgrade_message);
