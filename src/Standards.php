@@ -135,20 +135,22 @@ class Standards
         $result = 0;
         $io     = $event->getIO();
         $upgrade_message = [
-            '<warning>To use the current standard (v1.1.1) of bcgov/wordpress-scripts</warning>',
-            '<warning>simply change the your require-dev in composer.json like so:</warning>',
+            '<warning>To use the current standard (v1.1.1) of bcgov/wordpress-scripts instead of upgrading: </warning>',
+            'change the version of wordpress-scripts in composer.json:',
+            ' ',
             '"require-dev": {',
             '...',
             '"bcgov/wordpress-scripts": "1.1.1"',
             '...',
             '}',
             ' ',
-            'See: https://apps.itsm.gov.bc.ca/bitbucket/projects/WP/repos/wordpress-scripts/browse/README.md#why-you-should-use-the-latest-version-of-this-package',
+            'For more information, read the section #why-you-should-use-the-latest-version-of-this-package here:',
+            'https://apps.itsm.gov.bc.ca/bitbucket/projects/WP/repos/wordpress-scripts/browse/README.md',
         ];
 
         $io->write($upgrade_message);
 
-        return result;
+        return $result;
 
     }//end promptUserAboutUpgrade()
 
