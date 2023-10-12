@@ -85,7 +85,7 @@ class Standards
 
         // Prompt the user whether they want to upgrade, then explain how & why.
         if ($confirm->upgrade === 'no') {
-            self::promptUserAboutUpgrade();
+            self::promptUserAboutUpgrade($event);
 
             return $result;
         };
