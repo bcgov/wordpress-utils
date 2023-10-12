@@ -94,7 +94,7 @@ class Standards
             $io->write("{$phpcbf} -p --standard=./vendor/bcgov/wordpress-scripts/wordpress.xml --colors {$source}\n");
         } else {
             $result = $process->execute("{$phpcs} -ps --standard=./vendor/bcgov/wordpress-scripts/wordpress.xml  --colors {$sniffs} {$source}");
-            // Explain how to prevent an upgrade to wordpress coding standards in order to avoid correcting many errors
+            // Remind user how to avoid fixing new linter errors caused by the upgrade.
             self::promptUserAboutUpgrade($event);
         }
 
@@ -144,8 +144,8 @@ class Standards
             '...',
             '}',
             ' ',
-            'For more information, read the section #why-you-should-use-the-latest-version-of-this-package here:',
-            'https://apps.itsm.gov.bc.ca/bitbucket/projects/WP/repos/wordpress-scripts/browse/README.md',
+            'For more information, See:',
+            'https://apps.itsm.gov.bc.ca/bitbucket/projects/WP/repos/wordpress-scripts/browse/README.md#why-you-should-use-the-latest-version-of-this-package',
             ' ',
         ];
 
