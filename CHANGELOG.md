@@ -1,6 +1,6 @@
 ### 2.0.0 October 12, 2023
 
-- Updated wordpress coding standards to 3.0.0 ([DESCW-1503](https://apps.itsm.gov.bc.ca/jira/browse/DESCW-1503))
+- Updated wordpress coding standards to 3.0.1 ([DESCW-1503](https://apps.itsm.gov.bc.ca/jira/browse/DESCW-1503))
 - Added scripting to prompt user whether to accept upgrade, and why to do so.
 - Added user message to instruct user how to decline an upgrade in coding standards for their repo.
 
