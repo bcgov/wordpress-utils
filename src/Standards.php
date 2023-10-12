@@ -120,12 +120,12 @@ class Standards
         $result = 0;
         $io     = $event->getIO();
         $upgrade_message = [
-            '<warning>You should upgrade to the new WordPress coding standards.</warning>',
-            '<info>The default is: "@dev" which will use the latest version, but you should set your version number to 2.0',
-            'in the "require-dev" section of your composer.json to avoid unexpected errors next time you run composer install.',
-            'To DOWNGRADE (not recommended) to the old version wordpress-scripts',
-            'set your version number to 1.1.1 in the "require-dev" section of your composer.json',
-            'For more info on how to upgrade / downgrade your wordpress-scripts version, see:',
+            '<warning>Please remember to upgrade your `wordpress-scripts` to the latest version to use the new WordPress coding standards.</warning>',
+            ' ',
+            '<info>The default version is "@dev". It tracks the latest version, but you should pin your version number to 2.0 to avoid unexpected errors when you run composer install.',
+            'To DOWNGRADE (not recommended) to the old version wordpress-scripts, set your version number to 1.1.1 in the "require-dev" section of your composer.json',
+            'For more info on how to upgrade / downgrade your wordpress-scripts version:',
+            ' ',
             'https://apps.itsm.gov.bc.ca/bitbucket/projects/WP/repos/wordpress-scripts/browse/README.md#why-you-should-use-the-latest-version-of-this-package',
             '</info> ',
         ];
