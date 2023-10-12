@@ -25,7 +25,9 @@ class Standards
      */
     public static function phpcs(Event $event): int
     {
-        return self::phpWordPressCodingStandards($event);
+        self::phpWordPressCodingStandards($event);
+
+        return self::promptUserAboutUpgrade($event);
 
     }//end phpcs()
 
@@ -73,25 +75,21 @@ class Standards
             'yes' => 'yes',
             'no'  => 'no',
         ];
-        $composer_json_lines = [
-            '"require-dev": {',
-            '...',
-            '"bcgov/wordpress-scripts": "1.1.1"',
-            '...',
-            '}',
-            ' ',
-        ];
-
         $confirm = (object) [
-            'upgrade' => $io->select('Would you like to upgrade your composer.json to use the new WordPress coding standards? (Default No)', $options, 'no'),
+            'upgrade' => $io->select(
+                [
+                    'Would you like to upgrade your composer.json to use the new WordPress coding standards?',
+                    '(Default No):',
+                ],
+                $options,
+                'no'
+            ),
         ];
 
         // Prompt the user whether they want to upgrade, then explain how & why.
         if ($confirm->upgrade === 'no') {
-            $io->write('<warning>To use the current standard (v1.1.1) of bcgov/wordpress-scripts</warning>');
-            $io->write('<warning>simply change the your require-dev in composer.json like so:</warning>');
-            $io->write($composer_json_lines);
-            $io->write("See: https://apps.itsm.gov.bc.ca/bitbucket/projects/WP/repos/wordpress-scripts/browse/README.md#why-you-should-use-the-latest-version-of-this-package");
+            self::promptUserAboutUpgrade();
+
             return $result;
         };
 
@@ -127,6 +125,35 @@ class Standards
         return $result;
 
     }//end npm()
+
+
+    /**
+     * Prompts the user to upgrade their composer.json to use the new WordPress coding standards.
+     * Also explains:
+     * - how to upgrade and why.
+     * - how to prevent an upgrade in order to avoid correcting many errors
+     */
+    public static function promptUserAboutUpgrade(Event $event): int
+    {
+        $result = 0;
+        $io     = $event->getIO();
+        $upgrade_message = [
+            '<warning>To use the current standard (v1.1.1) of bcgov/wordpress-scripts</warning>',
+            '<warning>simply change the your require-dev in composer.json like so:</warning>',
+            '"require-dev": {',
+            '...',
+            '"bcgov/wordpress-scripts": "1.1.1"',
+            '...',
+            '}',
+            ' ',
+            'See: https://apps.itsm.gov.bc.ca/bitbucket/projects/WP/repos/wordpress-scripts/browse/README.md#why-you-should-use-the-latest-version-of-this-package',
+        ];
+
+        $io->write($upgrade_message);
+
+        return result;
+
+    }//end promptUserAboutUpgrade()
 
 
 }//end class
