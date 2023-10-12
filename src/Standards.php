@@ -69,24 +69,9 @@ class Standards
         }
 
         // Let the user know about their composer.json wordpress standards options.
-        $options = [
-            'yes' => 'yes',
-            'no'  => 'no',
-        ];
-        $confirm = (object) [
-            'upgrade' => $io->select(
-                'Would you like to upgrade your composer.json to use the new WordPress coding standards? (Default No):',
-                $options,
-                'no'
-            ),
-        ];
 
         // Prompt the user whether they want to upgrade, then explain how & why.
-        if ($confirm->upgrade === 'no') {
             self::promptUserAboutUpgrade($event);
-
-            return $result;
-        };
 
         if ($fix) {
             $result = $process->execute("{$phpcbf} -pn --standard=./vendor/bcgov/wordpress-scripts/wordpress.xml --colors {$source}");
@@ -139,8 +124,22 @@ class Standards
         $result = 0;
         $io     = $event->getIO();
         $upgrade_message = [
-            '<warning>To use the current standard (v1.1.1) of bcgov/wordpress-scripts instead of upgrading: </warning>',
-            'change the version of wordpress-scripts in composer.json:',
+            '<warning>It is recommended that you upgrade to the new WordPress coding standards.</warning>',
+            ' ',
+            '<warning>The default is: "@dev" which will use the latest version, but you should specify a version number to avoid unexpected changes.</warning>',
+            ' ',
+            'to do this, please change the version of wordpress-scripts in composer.json:',
+            ' ',
+            '"require-dev": {',
+            '...',
+            '"bcgov/wordpress-scripts": "2.0"',
+            '...',
+            '}',
+            ' ',
+            '<warning>To DOWNGRADE (not recommended) to the former standard (v1.1.1) of bcgov/wordpress-scripts : </warning>',
+            '<warning>This will prevent the new errors from being reported, but will not fix them.</warning>',
+            ' ',
+            '<warning>To DOWNGRADE the version of wordpress-scripts in composer.json:</warning>',
             ' ',
             '"require-dev": {',
             '...',
