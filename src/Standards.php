@@ -121,12 +121,13 @@ class Standards
         $upgrade_message = [
             '<warning>Please remember to upgrade your `wordpress-scripts` to the latest version to use the new WordPress coding standards!</warning>',
             ' ',
-            '<info>To UPGRADE, Pin your version number to 2.0 to avoid unexpected errors when you run `composer install`.',
-            '(the version is set to "@dev" by default: it tracks the latest version of the package).',
+            '<info>The version is set to "@dev" by default, but you should change this to "2.0" in the "require-dev" section of your composer.json.',
+            'This will avoid unexpected errors and warnings resulting from a major version upgrade.',
+            'To UPGRADE, set your version number to 2.0 in the "require-dev" section of your composer.json.',
             'To DOWNGRADE (not recommended) to the old version of wordpress-scripts,',
             'set your version number to 1.1.1 in the "require-dev" section of your composer.json.',
             ' ',
-            'For more information',
+            'For detailed instructions:',
             'https://apps.itsm.gov.bc.ca/bitbucket/projects/WP/repos/wordpress-scripts/browse/README.md#why-you-should-use-the-latest-version-of-this-package',
             '</info> ',
         ];
