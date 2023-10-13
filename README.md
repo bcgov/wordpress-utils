@@ -1,34 +1,35 @@
 # WordPress Scripts.
 
 ## Description
+
 This should be included as dev dependency for all themes and plugins, which will then give coding standards, testing and checklists.
-
-
-
 
 ## Classes
 
 ### \Bcgov\Script
 
 #### \Bcgov\Script\Standards::phpcs
+
 This script can be used in a theme or plugin for WordPress coding standards checks.
 
 #### \Bcgov\Script\Standards::phpcbf
+
 This script can be used in a theme or plugin for WordPress coding standard fixes.
 
 #### \Bcgov\Script\Tests::phpunit
+
 This script can be used for php unit testing.
 
 #### \Bcgov\Script\Checklists::postProductionChecks
+
 This is used to create a checklist, which creates a checklist.md in your root of your theme or plugin.
 
-* Creates a file checklist.md in theme or plugin.
-* Creates a static checklist of items that need to be completed.
-* Creates a dynamic checklist, and automatically checks passed or failed, depending on item.
-* ignores the @todo warning if the event comes from the checklist or production script.
+- Creates a file checklist.md in theme or plugin.
+- Creates a static checklist of items that need to be completed.
+- Creates a dynamic checklist, and automatically checks passed or failed, depending on item.
+- ignores the @todo warning if the event comes from the checklist or production script.
 
-
-## Composer.json 
+## Composer.json
 
 Typical composer.json for theme / plugin
 
@@ -66,3 +67,43 @@ Typical composer.json for theme / plugin
     ]
 }
 ```
+
+## Why you should use the latest version of this package:
+
+> (_currently using the ^3.0.1 of wordpress-coding-standards_)
+
+1. the latest version of the package has the latest version of the coding standards
+2. this set of standards is compliant with the latest version of php (8.2.x)
+3. the warnings/errors are more accurate and up to date
+
+### How to upgrade to the latest version of this package:
+
+Change the version of wordpress-scripts in composer.json
+
+        ```JSON
+            '"require-dev": {',
+            '...',
+            '"bcgov/wordpress-scripts": "2.0"',
+            '...',
+            '}',
+        ```
+
+> The default is: "@dev" which will use the latest version, but you should specify a version number (currently 2.0) to avoid unexpected changes.
+
+### How to downgrade this package to the old version:
+
+_If you would like to suppress the new errors and warnings, (NOT RECOMMENDED), you can downgrade to the 1.1.1 version of this package._
+
+Change the version of wordpress-scripts in composer.json
+
+        ```JSON
+            '"require-dev": {',
+            '...',
+            '"bcgov/wordpress-scripts": "1.1.1"',
+            '...',
+            '}',
+        ```
+
+> DOWNGRADING IS NOT RECOMMENDED: this will prevent the new errors and warnings, and lower the quality of the code.
+
+### See this link for more info: https://make.wordpress.org/core/2023/08/21/wordpresscs-3-0-0-is-now-available/

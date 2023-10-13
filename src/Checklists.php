@@ -92,30 +92,30 @@ class Checklists
                 'no'  => 'no',
             ];
             $confirm       = (object) [
-                'composer'  => $io->select('Is your version in composer.json the correct version? (Default Yes)', $selectChoices, 'yes'),
-                'style'     => $io->select('Is your version in your style.css or plugin file the correct version? (Default Yes)', $selectChoices, 'yes'),
-                'changelog' => $io->select('Did you update the CHANGELOG.md to include jira tickets? (Default Yes)', $selectChoices, 'yes'),
-                'readme'    => $io->select('Update README.md if applicable? (Default No)', $selectChoices, 'no'),
-                'assets'    => $io->select('Built assets if applicable? (Default Yes)', $selectChoices, 'yes'),
+                'composer'      => $io->select('Is your version in composer.json the correct version? (Default Yes)', $selectChoices, 'yes'),
+                'style'         => $io->select('Is your version in your style.css or plugin file the correct version? (Default Yes)', $selectChoices, 'yes'),
+                'changelog'     => $io->select('Did you update the CHANGELOG.md to include jira tickets? (Default Yes)', $selectChoices, 'yes'),
+                'readme'        => $io->select('Update README.md if applicable? (Default No)', $selectChoices, 'no'),
+                'assets'        => $io->select('Built assets if applicable? (Default Yes)', $selectChoices, 'yes'),
                 'documentation' => $io->select('Does/did documentation need to be updated? (Default No)', $selectChoices, 'no'),
             ];
             // If documentation needs to be updated, is a new JIRA ticket needed?
-            if ( 'yes' === $confirm->documentation ) {
+            if ($confirm->documentation === 'yes') {
                 $confirm->newTicketNeeded = $io->select('Is a separate ticket required for the documentation? (Default No)', $selectChoices, 'no');
             };
             // If a new ticket is needed, we need to get the ticket ID.
-            if ( isset( $confirm->newTicketNeeded ) && 'yes' === $confirm->newTicketNeeded ) {
+            if ($confirm->newTicketNeeded === 'yes' && isset($confirm->newTicketNeeded)) {
                 $confirm->newTicketId = $io->ask('Please enter the ticket ID: ');
             };
-            // Now we can determine the value of $confirm->documentation (either 'N/A', 'Updated', or a ticket ID)
-            if ( 'no' === $confirm->documentation ) {
+            // Now we can determine the value of $confirm->documentation (either 'N/A', 'Updated', or a ticket ID).
+            if ($confirm->documentation === 'no') {
                 $confirm->documentation = 'N/A';
-            } else if ( 'yes' === $confirm->documentation && isset( $confirm->newTicketNeeded ) && 'no' === $confirm->newTicketNeeded ) {
+            } else if ($confirm->documentation === 'yes' && isset($confirm->newTicketNeeded) && $confirm->newTicketNeeded === 'no') {
                 $confirm->documentation = 'Updated';
             } else {
                 $confirm->documentation = $confirm->newTicketId;
             };
-            $checklist     = array_merge(
+            $checklist = array_merge(
                 [
                     "* [{$confirm->composer}] Updated version in composer.json",
                     "* [{$confirm->style}] Updated version in style.css or plugin file",
