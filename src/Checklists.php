@@ -104,7 +104,7 @@ class Checklists
                 $confirm->newTicketNeeded = $io->select('Is a separate ticket required for the documentation? (Default No)', $selectChoices, 'no');
             };
             // If a new ticket is needed, we need to get the ticket ID.
-            if ($confirm->newTicketNeeded === 'yes' && isset($confirm->newTicketNeeded)) {
+            if (isset($confirm->newTicketNeeded) && $confirm->newTicketNeeded === 'yes') {
                 $confirm->newTicketId = $io->ask('Please enter the ticket ID: ');
             };
             // Now we can determine the value of $confirm->documentation (either 'N/A', 'Updated', or a ticket ID).
