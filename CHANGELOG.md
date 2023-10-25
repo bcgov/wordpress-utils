@@ -1,3 +1,7 @@
+### 2.0.1 October 25, 2023
+
+- Fixed bug in Checklists logic causing error when certain options are selected ([DESCW-1665](https://apps.itsm.gov.bc.ca/jira/browse/DESCW-1665))
+
 ### 2.0.0 October 12, 2023
 
 - Updated wordpress coding standards to 3.0.1 ([DESCW-1503](https://apps.itsm.gov.bc.ca/jira/browse/DESCW-1503))
