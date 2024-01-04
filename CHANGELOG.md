@@ -1,3 +1,7 @@
+### 2.0.2 January 04, 2024
+
+- Changed Standards to ask user whether to fix warnings when running phpcbf ([DESCW-1744](https://apps.itsm.gov.bc.ca/jira/browse/DESCW-1744))
+
 ### 2.0.1 October 25, 2023
 
 - Fixed bug in Checklists logic causing error when certain options are selected ([DESCW-1665](https://apps.itsm.gov.bc.ca/jira/browse/DESCW-1665))

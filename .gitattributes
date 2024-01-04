@@ -4,8 +4,4 @@
 CHANGELOG.md	    export-ignore
 README.md	        export-ignore
 composer.json       export-ignore
-comoser.lock        export-ignore
-phpcs.xml           export-ignore
-src/Tests           export-ignore
-
-
+composer.lock       export-ignore
