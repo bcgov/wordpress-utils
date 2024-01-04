@@ -69,12 +69,7 @@ class Standards
         }
 
         if ($fix) {
-            $fixWarnings = $io->select('Fix warnings? <warning>This may add many changes to your commit if you are running this for the first time.</warning> (Default Yes)', ['yes' => 'yes', 'no' => 'no'], 'yes');
-            if ('yes' === $fixWarnings) {
-                $result = $process->execute("{$phpcbf} -ps --standard=./vendor/bcgov/wordpress-scripts/wordpress.xml --colors {$source}");
-            } else {
-                $result = $process->execute("{$phpcbf} -pns --standard=./vendor/bcgov/wordpress-scripts/wordpress.xml --colors {$source}");
-            }
+            $result = $process->execute("{$phpcbf} -ps --standard=./vendor/bcgov/wordpress-scripts/wordpress.xml --colors {$source}");
         } else {
             $result = $process->execute("{$phpcs} -ps --standard=./vendor/bcgov/wordpress-scripts/wordpress.xml  --colors {$sniffs} {$source}");
         }
