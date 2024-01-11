@@ -1,3 +1,8 @@
+### 2.1.0 January 11, 2024
+
+- Added PHPCompatibilityWP rule to check for PHP 7.4-8.3 issues ([DESWC-1895](https://apps.itsm.gov.bc.ca/jira/browse/DESCW-1895))
+- Removed composer.json from the .gitattributes export ignore.
+
 ### 2.0.2 January 04, 2024
 
 - Changed Standards::phpcbf to fix all warnings and errors by default ([DESCW-1744](https://apps.itsm.gov.bc.ca/jira/browse/DESCW-1744))
