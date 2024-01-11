@@ -3,5 +3,4 @@
 .gitkeep            export-ignore
 CHANGELOG.md	    export-ignore
 README.md	        export-ignore
-composer.json       export-ignore
 composer.lock       export-ignore
