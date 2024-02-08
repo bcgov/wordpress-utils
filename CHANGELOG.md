@@ -1,3 +1,7 @@
+### 2.1.1 February 7, 2024
+
+- Added a directory exclusion for additional dist|-named| directories, specifically to allow use of the Vite builder tooling and create an alternate dist directory such 'dist-vue' to build to in order to not conflict with wp-scripts output ([ENG-109](https://apps.itsm.gov.bc.ca/jira/browse/ENG-109))
+
 ### 2.1.0 January 11, 2024
 
 - Added PHPCompatibilityWP rule to check for PHP 7.4-8.3 issues ([DESWC-1895](https://apps.itsm.gov.bc.ca/jira/browse/DESCW-1895))
