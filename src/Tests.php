@@ -27,9 +27,9 @@ class Tests
     public static function phpunit(Event $event, bool $silent=false): int
     {
         $config    = $event->getComposer()->getConfig();
-        $vendorDir = escapeshellarg($config->get('vendor-dir'));
-        $phpunit   = "{$vendorDir}/bin/phpunit";
-        $xml       = "{$vendorDir}/../phpunit.xml";
+        $vendorDir = $config->get('vendor-dir');
+        $phpunit   = escapeshellarg("{$vendorDir}/bin/phpunit");
+        $xml       = escapeshellarg("{$vendorDir}/../phpunit.xml");
         $io        = $event->getIO();
         $process   = new ProcessExecutor($io);
         $redirect  = $silent ? '&>/dev/null' : '';
