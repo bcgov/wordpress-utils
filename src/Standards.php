@@ -55,10 +55,10 @@ class Standards
     public static function phpWordPressCodingStandards(Event $event, bool $fix=false): int
     {
         $config    = $event->getComposer()->getConfig();
-        $vendorDir = escapeshellarg($config->get('vendor-dir'));
-        $phpcs     = "{$vendorDir}/bin/phpcs";
-        $phpcbf    = "{$vendorDir}/bin/phpcbf";
-        $source    = "{$vendorDir}/../";
+        $vendorDir = ($config->get('vendor-dir'));
+        $phpcs     = escapeshellarg("{$vendorDir}/bin/phpcs");
+        $phpcbf    = escapeshellarg("{$vendorDir}/bin/phpcbf");
+        $source    = escapeshellarg("{$vendorDir}/../");
         $io        = $event->getIO();
         $process   = new ProcessExecutor($io);
         $result    = 0;

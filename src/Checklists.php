@@ -9,7 +9,6 @@ namespace Bcgov\Script;
 
 use Composer\Script\Event;
 use Composer\Installer\PackageEvent;
-use Composer\Util\ProcessExecutor;
 use Composer\IO\IOInterface;
 use Bcgov\Script\Standards;
 use Bcgov\Script\Tests;
@@ -28,9 +27,8 @@ class Checklists
     public static function postProductionChecks(Event $event): void
     {
         $io            = $event->getIO();
-        $checklistFile = escapeshellarg($event->getComposer()->getConfig()->get('vendor-dir').'/../checklist.md');
+        $checklistFile = ($event->getComposer()->getConfig()->get('vendor-dir').'/../checklist.md');
         $success       = true;
-        $process       = new ProcessExecutor($io);
 
         // This is the default checklist, which is not automatically checked.
         $checklist = [];
@@ -133,8 +131,9 @@ class Checklists
         // This is meant as a temporary solution (checklist.md), towards CI/CD.
         date_default_timezone_set('America/Vancouver');
         $checklistString  = sprintf('Created at %s', date('Y-m-d g:i a'));
-        $checklistString .= $process->escape("\n\n".implode("\n", $checklist));
-        $process->execute("echo {$checklistString} > {$checklistFile}");
+        $checklistString .= "\n\n" . implode("\n", $checklist);
+
+        file_put_contents($checklistFile, $checklistString);
 
     }//end postProductionChecks()
 

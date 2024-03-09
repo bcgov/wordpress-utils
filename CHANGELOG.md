@@ -1,3 +1,7 @@
+### 2.1.2 March 8, 2024
+- Changed how the paths used by the phpcs/phpcbf/phpunit commands where run to properly escape the whole path and not just the vendor dir. Fixes issue with running phpcs/phpcbf on windows.
+- Moved to using the php built in file_put_contents() for checklist writing instead of shell/echo commands. ([DESCW-2152](https://apps.itsm.gov.bc.ca/jira/browse/DESCW-2152))
+
 ### 2.1.1 February 7, 2024
 
 - Added a directory exclusion for additional dist|-named| directories, specifically to allow use of the Vite builder tooling and create an alternate dist directory such 'dist-vue' to build to in order to not conflict with wp-scripts output ([ENG-109](https://apps.itsm.gov.bc.ca/jira/browse/ENG-109))
