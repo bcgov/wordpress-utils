@@ -1,3 +1,6 @@
+### 2.1.3 May 2, 2024
+- phpcs updates fixes camelCase issue ([DESCW-2280](https://apps.itsm.gov.bc.ca/jira/browse/DESCW-2280))
+
 ### 2.1.2 March 8, 2024
 - Changed how the paths used by the phpcs/phpcbf/phpunit commands where run to properly escape the whole path and not just the vendor dir. Fixes issue with running phpcs/phpcbf on windows.
 - Moved to using the php built in file_put_contents() for checklist writing instead of shell/echo commands. ([DESCW-2152](https://apps.itsm.gov.bc.ca/jira/browse/DESCW-2152))
