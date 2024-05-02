@@ -62,8 +62,6 @@
 	<!--<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound"><type>warning</type></rule>-->
 	<rule ref="WordPress.Files.FileName.InvalidClassFileName"><severity>0</severity></rule>
 	<rule ref="WordPress.Files.FileName.NotHyphenatedLowercase"><severity>0</severity></rule>
-	<rule ref="WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase"><severity>0</severity></rule>
-	<rule ref="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase"><severity>warning</severity></rule>
 	<rule ref="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase"><severity>warning</severity></rule>
 
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound"><severity>0</severity></rule>
