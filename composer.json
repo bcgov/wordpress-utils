@@ -1,5 +1,5 @@
 {
-    "name": "bcgov/wordpress-scripts",
+    "name": "bcgov/wordpress-utils",
     "version": "2.1.3",
     "require": {
         "php": ">=7.4",
