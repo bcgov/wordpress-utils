@@ -1,4 +1,4 @@
-# WordPress Scripts.
+# WordPress Utils.
 
 ## Description
 
@@ -36,7 +36,7 @@ Typical composer.json for theme / plugin
 
 ```
 "require-dev": {
-    "bcgov/wordpress-scripts": "@dev"
+    "bcgov/wordpress-utils": "@dev"
 },
 "scripts" : {
     "setup": [
@@ -79,12 +79,12 @@ Typical composer.json for theme / plugin
 
 ### How to upgrade to the latest version of this package:
 
-Change the version of wordpress-scripts in composer.json
+Change the version of wordpress-utils in composer.json
 
         ```JSON
             '"require-dev": {',
             '...',
-            '"bcgov/wordpress-scripts": "2.0"',
+            '"bcgov/wordpress-utils": "2.0"',
             '...',
             '}',
         ```
@@ -95,12 +95,12 @@ Change the version of wordpress-scripts in composer.json
 
 _If you would like to suppress the new errors and warnings, (NOT RECOMMENDED), you can downgrade to the 1.1.1 version of this package._
 
-Change the version of wordpress-scripts in composer.json
+Change the version of wordpress-utils in composer.json
 
         ```JSON
             '"require-dev": {',
             '...',
-            '"bcgov/wordpress-scripts": "1.1.1"',
+            '"bcgov/wordpress-utils": "1.1.1"',
             '...',
             '}',
         ```

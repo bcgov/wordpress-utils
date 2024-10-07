@@ -1,3 +1,6 @@
+### 2.2.0 October 7, 2024
+- rename wordpress-scripts to wordpres-utils in the README ([DESCW-2671](https://citz-gdx.atlassian.net/browse/DESCW-2671))
+
 ### 2.1.3 May 2, 2024
 - phpcs updates fixes camelCase issue ([DESCW-2280](https://apps.itsm.gov.bc.ca/jira/browse/DESCW-2280))
 
