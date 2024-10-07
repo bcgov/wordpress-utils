@@ -1,4 +1,4 @@
-### 2.1.3 October 7, 2024
+### 2.2.0 October 7, 2024
 - rename wordpress-scripts to wordpres-utils in the README
 
 ### 2.1.3 May 2, 2024
