@@ -69,9 +69,9 @@ class Standards
         }
 
         if ($fix) {
-            $result = $process->execute("{$phpcbf} -ps --standard=./vendor/bcgov/wordpress-scripts/wordpress.xml --colors {$source}");
+            $result = $process->execute("{$phpcbf} -ps --standard=./vendor/bcgov/wordpress-utils/wordpress.xml --colors {$source}");
         } else {
-            $result = $process->execute("{$phpcs} -ps --standard=./vendor/bcgov/wordpress-scripts/wordpress.xml  --colors {$sniffs} {$source}");
+            $result = $process->execute("{$phpcs} -ps --standard=./vendor/bcgov/wordpress-utils/wordpress.xml  --colors {$sniffs} {$source}");
         }
 
         return $result;
