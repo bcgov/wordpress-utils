@@ -34,6 +34,7 @@ class Tests
         $process   = new ProcessExecutor($io);
         $redirect  = $silent ? '&>/dev/null' : '';
         $result    = $process->execute("{$phpunit} --configuration {$xml} --coverage-text {$redirect}");
+
         return $result;
 
     }//end phpunit()
