@@ -34,7 +34,7 @@ class Tests
         $process   = new ProcessExecutor($io);
         $redirect  = $silent ? '&>/dev/null' : '';
         // $result    = $process->execute("{$phpunit} --configuration {$xml} --coverage-text {$redirect}");
-        $result    = $process->execute("wp_test");
+        $result    = $process->execute("{$phpunit} --configuration {$xml} --coverage-text {$redirect}");
 
         return $result;
 
