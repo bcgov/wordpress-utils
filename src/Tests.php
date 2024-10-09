@@ -29,11 +29,10 @@ class Tests
         $config    = $event->getComposer()->getConfig();
         $vendorDir = $config->get('vendor-dir');
         $phpunit   = escapeshellarg("{$vendorDir}/bin/phpunit");
-        $xml       = escapeshellarg("{$vendorDir}/../phpunit.xml.dist");
+        $xml       = escapeshellarg("{$vendorDir}/../phpunit.xml");
         $io        = $event->getIO();
         $process   = new ProcessExecutor($io);
         $redirect  = $silent ? '&>/dev/null' : '';
-        // $result    = $process->execute("{$phpunit} --configuration {$xml} --coverage-text {$redirect}");
         $result    = $process->execute("{$phpunit} --configuration {$xml} --coverage-text {$redirect}");
 
         return $result;
