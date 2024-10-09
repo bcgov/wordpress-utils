@@ -29,7 +29,7 @@ class Tests
         $config    = $event->getComposer()->getConfig();
         $vendorDir = $config->get('vendor-dir');
         $phpunit   = escapeshellarg("{$vendorDir}/bin/phpunit");
-        $xml       = escapeshellarg("{$vendorDir}/../phpunit.xml");
+        $xml       = escapeshellarg("{$vendorDir}/../phpunit.xml.dist");
         $io        = $event->getIO();
         $process   = new ProcessExecutor($io);
         $redirect  = $silent ? '&>/dev/null' : '';
