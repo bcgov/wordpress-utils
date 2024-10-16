@@ -1,3 +1,6 @@
+### 2.3.1 October 16, 2024
+- Fix scripts for PHPUnit test to make them work locally([DESCW-2680](https://citz-gdx.atlassian.net/browse/DESCW-2680))
+
 ### 2.3.0 October 7, 2024
 - rename wordpress-scripts to wordpres-utils in the README ([DESCW-2671](https://citz-gdx.atlassian.net/browse/DESCW-2671))
 
