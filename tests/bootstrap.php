@@ -26,10 +26,15 @@ if ( ! file_exists( "{$_tests_dir}/includes/functions.php" ) ) {
 require_once "{$_tests_dir}/includes/functions.php";
 
 /**
- * Manually load the plugin being tested.
+ * Manually load the plugin or theme being tested.
  */
-function _manually_load_plugin() {
-	require _wordpressutils_find_entrypoint_file();
+function _manually_load_plugin_or_theme() {
+	$entrypoint = _wordpressutils_find_entrypoint_file();
+    if ($entrypoint === true) {
+        _register_theme();
+    } elseif (is_string($entrypoint)) {
+        require $entrypoint;
+    }
 }
 
 /**
@@ -37,9 +42,11 @@ function _manually_load_plugin() {
  * Themes should have a functions.php file entrypoint.
  * Plugins should have a <plugin-name>.php file entrypoint.
  *
- * @return string
+ * @return string|bool Return the path to the <plugin-name>.php entrypoint for
+ *                     plugins. Return true for themes.
+ * @throws Exception If no single entrypoint php file can be found in the root directory.
  */
-function _wordpressutils_find_entrypoint_file(): string {
+function _wordpressutils_find_entrypoint_file() {
     $path = dirname( dirname( __FILE__ ), 4 );
     $file_to_require = null;
 
@@ -55,7 +62,7 @@ function _wordpressutils_find_entrypoint_file(): string {
     // If functions.php exists (theme), require it.
     $key = array_search('functions', $filenames);
     if ($key !== false) {
-        $file_to_require = $files[$key];
+        return true;
     } else {
         // Plugins are named <plugin-name>.php, attempt to filter php files to find this file.
         $IGNORED_FILENAMES = ['index', 'uninstall'];
@@ -73,7 +80,31 @@ function _wordpressutils_find_entrypoint_file(): string {
     return $file_to_require;
 }
 
-tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
+/**
+ * Registers theme.
+ */
+function _register_theme() {
+
+	$theme_dir     = dirname( __DIR__, 4 );
+	$current_theme = basename( $theme_dir );
+	$theme_root    = dirname( $theme_dir );
+
+	add_filter( 'theme_root', function () use ( $theme_root ) {
+		return $theme_root;
+	} );
+
+	register_theme_directory( $theme_root );
+
+	add_filter( 'pre_option_template', function () use ( $current_theme ) {
+		return $current_theme;
+	} );
+
+	add_filter( 'pre_option_stylesheet', function () use ( $current_theme ) {
+		return $current_theme;
+	} );
+}
+
+tests_add_filter( 'muplugins_loaded', '_manually_load_plugin_or_theme' );
 
 // Start up the WP testing environment.
 require "{$_tests_dir}/includes/bootstrap.php";
