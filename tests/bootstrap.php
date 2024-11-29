@@ -29,7 +29,48 @@ require_once "{$_tests_dir}/includes/functions.php";
  * Manually load the plugin being tested.
  */
 function _manually_load_plugin() {
-	require dirname( dirname( __FILE__ ) ) . '/wordpress-utils.php';
+	require _wordpressutils_find_entrypoint_file();
+}
+
+/**
+ * Attempts to find the entrypoint of the theme or plugin being tested.
+ * Themes should have a functions.php file entrypoint.
+ * Plugins should have a <plugin-name>.php file entrypoint.
+ *
+ * @return string
+ */
+function _wordpressutils_find_entrypoint_file(): string {
+    $path = dirname( dirname( __FILE__ ), 4 );
+    $file_to_require = null;
+
+    // Get all php files in the plugin/theme root.
+    $files = glob($path . '/*.php');
+    $filenames = [];
+
+    // Get just the filename for each file found.
+    foreach($files as $file) {
+        $filenames[] = pathinfo($file, PATHINFO_FILENAME);
+    }
+
+    // If functions.php exists (theme), require it.
+    $key = array_search('functions', $filenames);
+    if ($key !== false) {
+        $file_to_require = $files[$key];
+    } else {
+        // Plugins are named <plugin-name>.php, attempt to filter php files to find this file.
+        $IGNORED_FILENAMES = ['index', 'uninstall'];
+        $filtered_filenames = array_diff($filenames, $IGNORED_FILENAMES);
+        $files_found = count($filtered_filenames);
+        if ($files_found === 1) {
+            $file_to_require = $files[array_key_first($filtered_filenames)];
+        } elseif ($files_found < 1) {
+            throw new Exception('No entrypoint php file found. Plugins should have a <plugin-name>.php and themes should have a functions.php.');
+        } else {
+            throw new Exception('Multiple potential entrypoint php files found. List of allowed *.php files in project root: <plugin-name>, ' . join($IGNORED_FILENAMES, ', '));
+        }
+    }
+
+    return $file_to_require;
 }
 
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
