@@ -34,50 +34,46 @@ function _manually_load_plugin_or_theme() {
         _register_theme();
     } elseif (is_string($entrypoint)) {
         require $entrypoint;
+    } else {
+        throw new Exception('Could not load plugin or theme entrypoint.');
     }
 }
 
 /**
  * Attempts to find the entrypoint of the theme or plugin being tested.
  * Themes should have a functions.php file entrypoint.
- * Plugins should have a <plugin-name>.php file entrypoint.
+ * Plugins should have a *.php file entrypoint with certain headers.
  *
- * @return string|bool Return the path to the <plugin-name>.php entrypoint for
- *                     plugins. Return true for themes.
- * @throws Exception If no single entrypoint php file can be found in the root directory.
+ * @return string|bool Return the path to the *.php entrypoint for
+ *                     plugins. Return true for themes. Return false if
+ *                     no entrypoint could be found.
  */
 function _wordpressutils_find_entrypoint_file() {
     $path = dirname( dirname( __FILE__ ), 4 );
-    $file_to_require = null;
 
-    // Get all php files in the plugin/theme root.
-    $files = glob($path . '/*.php');
-    $filenames = [];
-
-    // Get just the filename for each file found.
-    foreach($files as $file) {
-        $filenames[] = pathinfo($file, PATHINFO_FILENAME);
-    }
-
-    // If functions.php exists (theme), require it.
-    $key = array_search('functions', $filenames);
-    if ($key !== false) {
+    // If functions.php exists this is a theme, return true.
+    if (file_exists($path . '/functions.php')) {
         return true;
     } else {
-        // Plugins are named <plugin-name>.php, attempt to filter php files to find this file.
-        $IGNORED_FILENAMES = ['index', 'uninstall'];
-        $filtered_filenames = array_diff($filenames, $IGNORED_FILENAMES);
-        $files_found = count($filtered_filenames);
-        if ($files_found === 1) {
-            $file_to_require = $files[array_key_first($filtered_filenames)];
-        } elseif ($files_found < 1) {
-            throw new Exception('No entrypoint php file found. Plugins should have a <plugin-name>.php and themes should have a functions.php.');
-        } else {
-            throw new Exception('Multiple potential entrypoint php files found. List of allowed *.php files in project root: <plugin-name>, ' . join($IGNORED_FILENAMES, ', '));
+        // Get all php files in the plugin root.
+        $files = glob($path . '/*.php');
+        
+        $default_headers = [
+            'Plugin Name' => 'Plugin Name',
+        ];
+
+        // Plugins should have an entrypoint file with the Plugin Name header.
+        foreach($files as $file) {
+            $file_data = get_file_data($file, $default_headers);
+            
+            if (!empty($file_data['Plugin Name'])) {
+                return $file;
+            }
         }
     }
 
-    return $file_to_require;
+    // No theme or plugin entrypoint was found.
+    return false;
 }
 
 /**
