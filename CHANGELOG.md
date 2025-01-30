@@ -1,3 +1,6 @@
+### 2.5.0 January 29, 2025
+- Added the scan-wp-patterns.php which will get installed in `vendor/bin` folder ([DESCW-2878](https://citz-gdx.atlassian.net/browse/DESCW-2878))
+
 ### 2.4.0 November 29, 2024
 
 - Updated tests/bootstrap.php to be able to handle unit tests for themes and plugins ([DESCW-2685](https://citz-gdx.atlassian.net/browse/DESCW-2685))
