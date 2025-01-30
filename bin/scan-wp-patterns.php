@@ -1,5 +1,5 @@
 <?php
-$directory           = '../../../../patterns'; // This has to go up
+$directory           = './patterns'; // This has to go up
 $img_failures        = []; // Array to hold failures for <img src>.
 $href_failures       = []; // Array to hold failures for <a href>.
 $total_files_scanned = 0; // Total number of files scanned.
