@@ -4,6 +4,25 @@
 
 This should be included as dev dependency for all themes and plugins, which will then give coding standards, testing and checklists.
 
+## The bin folder
+###  Scan WP Patterns Script
+
+The `scan-wp-patterns.php` script gets installed into the `vendor/bin` folder, and is used to do basic scanning of WordPress patterns.
+Here are some of the things it scans:
+- Checks image tags (`<img>`) to ensure the `src` attribute has PHP that references an image file in the `assets/` directory.
+- Checks link tags (`<a>`) to ensure `localhost` is not part of the `href` attribute.
+- ... more to come as required
+
+Note: The scan requires the `patterns/` folder to be at the root of the theme or plugin.
+
+#### Usage 
+```json
+...
+"scripts": {
+        "scan-wp-patterns": "@php vendor/bin/scan-wp-patterns.php",
+}
+...
+```
 ## Classes
 
 ### \Bcgov\Script
@@ -51,6 +70,7 @@ Typical composer.json for theme / plugin
         "npm run build:production",
         "@checklist"
     ],
+    "scan-wp-patterns": "@php vendor/bin/scan-wp-patterns.php",
     "checklist" : [
         "Bcgov\\Script\\Checklists::postProductionChecks"
     ],

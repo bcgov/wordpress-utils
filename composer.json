@@ -1,6 +1,6 @@
 {
     "name": "bcgov/wordpress-utils",
-    "version": "2.4.0",
+    "version": "2.5.0",
     "require": {
         "php": ">=7.4",
         "composer/installers": "~1.0",
@@ -35,6 +35,7 @@
         ]
 
     },
+    "bin" : ["bin/scan-wp-patterns.php"],
     "config": {
         "allow-plugins": {
             "composer/installers": false,
