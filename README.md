@@ -8,11 +8,12 @@ This should be included as dev dependency for all themes and plugins, which will
 ###  Scan WP Patterns Script
 
 The `scan-wp-patterns.php` script gets installed into the `vendor/bin` folder, and is used to do basic scanning of WordPress patterns.
-Here are some of the things it scans
-- checks image tags <img > to ensure the source is a valid url, which is defined by a php tag
-- checks link tags <a> to ensure localhost is not part of link
+Here are some of the things it scans:
+- Checks image tags (`<img>`) to ensure the `src` attribute has PHP that references an image file in the `assets/` directory.
+- Checks link tags (`<a>`) to ensure `localhost` is not part of the `href` attribute.
 - ... more to come as required
-- It requires the `patterns` folder to be at the root of the theme or plugin.
+
+Note: The scan requires the `patterns/` folder to be at the root of the theme or plugin.
 
 #### Usage 
 ```json
