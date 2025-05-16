@@ -8,9 +8,7 @@
 namespace Bcgov\Script;
 
 use Composer\Script\Event;
-use Composer\Installer\PackageEvent;
 use Composer\Util\ProcessExecutor;
-use Composer\IO\IOInterface;
 
 class Tests
 {
@@ -33,10 +31,7 @@ class Tests
         $io        = $event->getIO();
         $process   = new ProcessExecutor($io);
         $redirect  = $silent ? '&>/dev/null' : '';
-        $result    = $process->execute("{$phpunit} --configuration {$xml} --coverage-text {$redirect}");
-
-        return $result;
-
+        return $process->execute("{$phpunit} --configuration {$xml} --coverage-text {$redirect}");
     }//end phpunit()
 
 

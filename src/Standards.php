@@ -8,9 +8,7 @@
 namespace Bcgov\Script;
 
 use Composer\Script\Event;
-use Composer\Installer\PackageEvent;
 use Composer\Util\ProcessExecutor;
-use Composer\IO\IOInterface;
 
 class Standards
 {
@@ -90,13 +88,10 @@ class Standards
      */
     public static function npm(Event $event, string $cmd, bool $silent=false): int
     {
-        $result   = 0;
         $io       = $event->getIO();
         $process  = new ProcessExecutor($io);
         $redirect = $silent ? '&>/dev/null' : '';
-        $result   = $process->execute("npm run {$cmd} {$redirect}");
-        return $result;
-
+        return $process->execute("npm run {$cmd} {$redirect}");
     }//end npm()
 
 }//end class

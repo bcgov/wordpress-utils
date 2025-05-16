@@ -8,23 +8,31 @@
 namespace Bcgov\Script;
 
 use Composer\Script\Event;
-use Composer\Installer\PackageEvent;
-use Composer\IO\IOInterface;
 use Bcgov\Script\Standards;
 use Bcgov\Script\Tests;
 
 class Checklists
 {
 
+    /**
+     * Checklist for post production skipping phpunit execution.
+     *
+     * @param Event $event Gets triggered when run from a composer script.
+     * @return void
+     */
+    public static function postProductionChecksSkipPhpunit(Event $event) {
+        self::postProductionChecks($event, true);
+    }
 
     /**
      * Checklist for post production.
      *
-     * @param \Composer\Script\Event $event Gets triggered when run from a composer script.
+     * @param Event $event Gets triggered when run from a composer script.
+     * @param bool  $skip_phpunit Whether to skip phpunit execution.
      *
      * @return void
      */
-    public static function postProductionChecks(Event $event): void
+    public static function postProductionChecks(Event $event, bool $skip_phpunit = false): void
     {
         $io            = $event->getIO();
         $checklistFile = ($event->getComposer()->getConfig()->get('vendor-dir').'/../checklist.md');
@@ -54,16 +62,21 @@ class Checklists
             if ($check === 'phpcs') {
                 $result = Standards::phpWordPressCodingStandards($event, false);
                 $item   = '* [%s] Verified coding standards (phpcs)';
-            } else if ($check === 'phpUnit') {
-                $result = Tests::phpunit($event, true);
-                $item   = '* [%s] Run PHP tests';
-            } else if ($check === 'lintJs') {
+            } elseif ($check === 'phpUnit') {
+                if ($skip_phpunit) {
+                    $result = 0;
+                    $item = '* [N/A] Skipped PHP tests';
+                } else {
+                    $result = Tests::phpunit($event, true);
+                    $item   = '* [%s] Run PHP tests';
+                }
+            } elseif ($check === 'lintJs') {
                 $result = Standards::npm($event, 'lint:js', true);
                 $item   = '* [%s] Lint javascript';
-            } else if ($check === 'lintCss') {
+            } elseif ($check === 'lintCss') {
                 $result = Standards::npm($event, 'lint:css', true);
                 $item   = '* [%s] Lint CSS';
-            } else if ($check === 'testJs') {
+            } elseif ($check === 'testJs') {
                 $result = Standards::npm($event, 'test', true);
                 $item   = '* [%s] Javascript Tests';
             }
@@ -100,19 +113,19 @@ class Checklists
             // If documentation needs to be updated, is a new JIRA ticket needed?
             if ($confirm->documentation === 'yes') {
                 $confirm->newTicketNeeded = $io->select('Is a separate ticket required for the documentation? (Default No)', $selectChoices, 'no');
-            };
+            }
             // If a new ticket is needed, we need to get the ticket ID.
             if (isset($confirm->newTicketNeeded) && $confirm->newTicketNeeded === 'yes') {
                 $confirm->newTicketId = $io->ask('Please enter the ticket ID: ');
-            };
+            }
             // Now we can determine the value of $confirm->documentation (either 'N/A', 'Updated', or a ticket ID).
             if ($confirm->documentation === 'no') {
                 $confirm->documentation = 'N/A';
-            } else if ($confirm->documentation === 'yes' && isset($confirm->newTicketNeeded) && $confirm->newTicketNeeded === 'no') {
+            } elseif ($confirm->documentation === 'yes' && isset($confirm->newTicketNeeded) && $confirm->newTicketNeeded === 'no') {
                 $confirm->documentation = 'Updated';
             } else {
                 $confirm->documentation = $confirm->newTicketId;
-            };
+            }
             $checklist = array_merge(
                 [
                     "* [{$confirm->composer}] Updated version in composer.json",
@@ -185,16 +198,7 @@ class Checklists
      */
     public static function postProductionChecksForScripts(): void
     {
-        $checklist = [
-            '[] Updated version in composer.json',
-            '[] Updated CHANGELOG.md to include jira ticket',
-            '[] Updated README.md for new functionality',
-            '[] Verified coding standards (phpcs)',
-            '[] Run PHP tests',
-        ];
-
-        echo "****** CHECKLIST ******\n\n";
-        echo implode("\n", $checklist)."\n\n";
+        self::postProductionChecksForCommon();
 
     }//end postProductionChecksForScripts()
 
