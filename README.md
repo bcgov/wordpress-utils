@@ -1,4 +1,4 @@
-# WordPress Utils.
+# WordPress Utils
 
 ## Description
 
@@ -48,7 +48,10 @@ This is used to create a checklist, which creates a checklist.md in your root of
 - Creates a dynamic checklist, and automatically checks passed or failed, depending on item.
 - ignores the @todo warning if the event comes from the checklist or production script.
 
-## Composer.json
+#### \Bcgov\Script\Checklists::postProductionChecksSkipPhpunit
+
+This works the same as `postProductionChecks` above except it does not run phpunit tests so that the rest of the checklist can pass when phpunit tests cannot be run. This is useful for themes and plugins that use [WordPress' recommended unit test environment](https://make.wordpress.org/cli/handbook/misc/plugin-unit-tests/) as it is not compatible with \Bcgov\Script\Tests. 
+
 ## Composer.json
 
 Typical composer.json for theme / plugin
