@@ -17,11 +17,13 @@ Note: The scan requires the `patterns/` folder to be at the root of the theme or
 
 #### Usage
 ```json
-...
-"scripts": {
+{
+    ...
+    "scripts": {
         "scan-wp-patterns": "@php vendor/bin/scan-wp-patterns.php",
+    }
+    ...
 }
-...
 ```
 ## Classes
 
@@ -56,7 +58,7 @@ This works the same as `postProductionChecks` above except it does not run phpun
 
 Typical composer.json for theme / plugin
 
-```JSON
+```json
 "require-dev": {
     "bcgov/wordpress-utils": "@dev"
 },
@@ -104,15 +106,15 @@ Typical composer.json for theme / plugin
 
 Change the version of wordpress-utils in composer.json
 
-```JSON
+```json
     "require-dev": {
         ...
-        "bcgov/wordpress-utils": "2.5.0",
+        "bcgov/wordpress-utils": "2.8.0",
         ...
-    }',
+    },
 ```
 
-> The default is: "@dev" which will use the latest version, but you should specify a version number (currently 2.5.0) to avoid unexpected changes.
+> The default is: "@dev" which will use the latest version, but you should specify a version number (currently 2.8.0) to avoid unexpected changes.
 
 ### How to downgrade this package to the old version:
 
@@ -120,12 +122,12 @@ _If you would like to suppress the new errors and warnings, (NOT RECOMMENDED), y
 
 Change the version of wordpress-utils in composer.json
 
-```JSON
-    "require-dev": {
-        ...
-        "bcgov/wordpress-utils": "1.1.1",
-        ...
-    },
+```json
+"require-dev": {
+    ...
+    "bcgov/wordpress-utils": "1.1.1",
+    ...
+},
 ```
 
 > DOWNGRADING IS NOT RECOMMENDED: this will prevent the new errors and warnings, and lower the quality of the code.
