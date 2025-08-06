@@ -56,7 +56,7 @@ This works the same as `postProductionChecks` above except it does not run phpun
 
 Typical composer.json for theme / plugin
 
-```
+```JSON
 "require-dev": {
     "bcgov/wordpress-utils": "@dev"
 },
@@ -104,15 +104,15 @@ Typical composer.json for theme / plugin
 
 Change the version of wordpress-utils in composer.json
 
-        ```JSON
-            '"require-dev": {',
-            '...',
-            '"bcgov/wordpress-utils": "2.0"',
-            '...',
-            '}',
-        ```
+```JSON
+    "require-dev": {
+        ...
+        "bcgov/wordpress-utils": "2.5.0",
+        ...
+    }',
+```
 
-> The default is: "@dev" which will use the latest version, but you should specify a version number (currently 2.0) to avoid unexpected changes.
+> The default is: "@dev" which will use the latest version, but you should specify a version number (currently 2.5.0) to avoid unexpected changes.
 
 ### How to downgrade this package to the old version:
 
@@ -120,13 +120,13 @@ _If you would like to suppress the new errors and warnings, (NOT RECOMMENDED), y
 
 Change the version of wordpress-utils in composer.json
 
-        ```JSON
-            '"require-dev": {',
-            '...',
-            '"bcgov/wordpress-utils": "1.1.1"',
-            '...',
-            '}',
-        ```
+```JSON
+    "require-dev": {
+        ...
+        "bcgov/wordpress-utils": "1.1.1",
+        ...
+    },
+```
 
 > DOWNGRADING IS NOT RECOMMENDED: this will prevent the new errors and warnings, and lower the quality of the code.
 
