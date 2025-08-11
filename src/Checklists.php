@@ -103,7 +103,6 @@ class Checklists
                 'no'  => 'no',
             ];
             $confirm       = (object) [
-                'composer'      => $io->select('Is your version in composer.json the correct version? (Default Yes)', $selectChoices, 'yes'),
                 'style'         => $io->select('Is your version in your style.css or plugin file the correct version? (Default Yes)', $selectChoices, 'yes'),
                 'changelog'     => $io->select('Did you update the CHANGELOG.md to include jira tickets? (Default Yes)', $selectChoices, 'yes'),
                 'readme'        => $io->select('Update README.md if applicable? (Default No)', $selectChoices, 'no'),
@@ -128,7 +127,6 @@ class Checklists
             }
             $checklist = array_merge(
                 [
-                    "* [{$confirm->composer}] Updated version in composer.json",
                     "* [{$confirm->style}] Updated version in style.css or plugin file",
                     "* [{$confirm->changelog}] Updated CHANGELOG.md to include jira ticket",
                     "* [{$confirm->readme}] Updated README.md for new functionality",
@@ -178,7 +176,6 @@ class Checklists
     public static function postProductionChecksForCommon(): void
     {
         $checklist = [
-            '[] Updated version in composer.json',
             '[] Updated CHANGELOG.md to include jira ticket',
             '[] Updated README.md for new functionality',
             '[] Verified coding standards (phpcs)',
