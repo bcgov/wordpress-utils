@@ -96,7 +96,7 @@ Typical composer.json for theme / plugin
 
 ## Why you should use the latest version of this package:
 
-> (_currently using the ^3.0.1 of wordpress-coding-standards_)
+> (_we are currently using wordpress-coding-standards/wpcs ^3.2_)
 
 1. the latest version of the package has the latest version of the coding standards
 2. this set of standards is compliant with the latest version of php (8.2.x)
