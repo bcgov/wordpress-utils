@@ -18,10 +18,10 @@
 
         "phpcs": [
             "./vendor/bin/phpcs --config-set error_severity 1 -i;",
-            "./vendor/bin/phpcs -v -ps --colors ./"
+            "./vendor/bin/phpcs -ps --colors;"
         ],
         "phpcbf": [
-            "./vendor/bin/phpcbf -ps --colors ./ &2>/dev/null;"
+            "./vendor/bin/phpcbf -ps --colors;"
         ],
         "test": [
             "./vendor/bin/phpunit"
