@@ -109,7 +109,7 @@ Change the version of wordpress-utils in composer.json
 ```json
     "require-dev": {
         ...
-        "bcgov/wordpress-utils": "2.8.0",
+        "bcgov/wordpress-utils": "2.8.1",
         ...
     },
 ```
