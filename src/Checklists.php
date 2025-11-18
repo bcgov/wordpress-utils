@@ -41,8 +41,8 @@ class Checklists {
      * @param Event $event Gets triggered when run from a composer script.
      * @return void
      */
-    public static function post_production_checks_skip_phpunit( Event $event ) {
-        self::postProductionChecksForScripts( $event, true );
+    public static function postProductionChecksSkipPhpunit( Event $event ) {
+        self::postProductionChecks( $event, true );
     }
 
     /**
