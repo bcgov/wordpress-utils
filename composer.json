@@ -1,13 +1,12 @@
 {
     "name": "bcgov/wordpress-utils",
+    "description": "Utilities and tooling for WordPress development (scanning, tests and coding standard checks)",
+    "type": "library",
+    "license": "MIT",
     "require": {
         "php": ">=7.4",
         "composer/composer": "^2.8",
-        "composer/installers": "~1.0",
-        "wp-coding-standards/wpcs": "^3.2",
-        "phpunit/phpunit": "^9.5",
-        "brain/monkey": "^2.6",
-        "phpcompatibility/phpcompatibility-wp": "^2.1"
+        "composer/installers": "~1.0"
     },
     "autoload": {
         "psr-4": {
@@ -17,6 +16,12 @@
     "scripts": {
         "test-setup":[
             "bash ./bin/install-wp-tests.sh wordpress_test root 'rootpassword' 0.0.0.0 latest"
+        ],
+        "production": [
+            "composer validate",
+            "composer phpcbf",
+            "composer phpcs",
+            "composer checklist"
         ],
         "phpcs": [
             "./vendor/bin/phpcs --config-set error_severity 1 -i;",
@@ -34,7 +39,6 @@
         "checklist": [
             "Bcgov\\Script\\Checklists::postProductionChecksForScripts"
         ]
-
     },
     "bin" : ["bin/scan-wp-patterns.php"],
     "config": {
@@ -44,6 +48,10 @@
         }
     },
     "require-dev": {
-        "phpcsstandards/phpcsutils": "^1.0"
+        "phpcsstandards/phpcsutils": "^1.0",
+        "wp-coding-standards/wpcs": "^3.2",
+        "phpunit/phpunit": "^9.5",
+        "brain/monkey": "^2.6",
+        "phpcompatibility/phpcompatibility-wp": "^2.1"
     }
 }
