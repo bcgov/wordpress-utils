@@ -27,15 +27,17 @@ require_once "{$_tests_dir}/includes/functions.php";
 
 /**
  * Manually load the plugin or theme being tested.
+ *
+ * @throws Exception If the plugin or theme entrypoint cannot be found.
  */
 function _manually_load_plugin_or_theme() {
 	$entrypoint = _wordpressutils_find_entrypoint_file();
-    if ($entrypoint === true) {
+    if ( true === $entrypoint ) {
         _register_theme();
-    } elseif (is_string($entrypoint)) {
+    } elseif ( is_string( $entrypoint ) ) {
         require $entrypoint;
     } else {
-        throw new Exception('Could not load plugin or theme entrypoint.');
+        throw new Exception( 'Could not load plugin or theme entrypoint.' );
     }
 }
 
@@ -49,24 +51,24 @@ function _manually_load_plugin_or_theme() {
  *                     no entrypoint could be found.
  */
 function _wordpressutils_find_entrypoint_file() {
-    $path = dirname( dirname( __FILE__ ), 4 );
+    $path = dirname( __DIR__, 4 );
 
     // If functions.php exists this is a theme, return true.
-    if (file_exists($path . '/functions.php')) {
+    if ( file_exists( $path . '/functions.php' ) ) {
         return true;
     } else {
         // Get all php files in the plugin root.
-        $files = glob($path . '/*.php');
-        
-        $default_headers = [
+        $files = glob( $path . '/*.php' );
+
+        $default_headers = array(
             'Plugin Name' => 'Plugin Name',
-        ];
+        );
 
         // Plugins should have an entrypoint file with the Plugin Name header.
-        foreach($files as $file) {
-            $file_data = get_file_data($file, $default_headers);
-            
-            if (!empty($file_data['Plugin Name'])) {
+        foreach ( $files as $file ) {
+            $file_data = get_file_data( $file, $default_headers );
+
+            if ( ! empty( $file_data['Plugin Name'] ) ) {
                 return $file;
             }
         }
@@ -85,19 +87,28 @@ function _register_theme() {
 	$current_theme = basename( $theme_dir );
 	$theme_root    = dirname( $theme_dir );
 
-	add_filter( 'theme_root', function () use ( $theme_root ) {
-		return $theme_root;
-	} );
+	add_filter(
+        'theme_root',
+        function () use ( $theme_root ) {
+			return $theme_root;
+		}
+    );
 
 	register_theme_directory( $theme_root );
 
-	add_filter( 'pre_option_template', function () use ( $current_theme ) {
-		return $current_theme;
-	} );
+	add_filter(
+        'pre_option_template',
+        function () use ( $current_theme ) {
+			return $current_theme;
+		}
+    );
 
-	add_filter( 'pre_option_stylesheet', function () use ( $current_theme ) {
-		return $current_theme;
-	} );
+	add_filter(
+        'pre_option_stylesheet',
+        function () use ( $current_theme ) {
+			return $current_theme;
+		}
+    );
 }
 
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin_or_theme' );

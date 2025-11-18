@@ -18,7 +18,7 @@
 
 	<!-- Rules: Check PHP version compatibility -->
 	<!-- https://github.com/PHPCompatibility/PHPCompatibility#sniffing-your-code-for-compatibility-with-specific-php-versions -->
-	<config name="testVersion" value="5.6-"/>
+	<config name="testVersion" value="7.4-"/>
 	<!-- https://github.com/PHPCompatibility/PHPCompatibilityWP -->
 	<rule ref="PHPCompatibilityWP"/>
 
@@ -30,6 +30,12 @@
 	<!-- Ignore Tab/Space indenting-->
 	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent.SpacesUsed" ><severity>0</severity></rule>
 	<rule ref="Generic.WhiteSpace.DisallowTabIndent"><type>warning</type><severity>0</severity></rule>
+
+	<!-- Ignore lowercase-hyphenated file names. This is the preferred naming convention for files. -->
+	<rule ref="WordPress.Files.FileName.NotHyphenatedLowercase"><severity>0</severity></rule>
+	<!-- Ignore invalid class file names. -->
+	<rule ref="WordPress.Files.FileName.InvalidClassFileName"><severity>0</severity></rule>
+
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<!-- Value: replace the function, class, and variable prefixes used. Separate multiple prefixes with a comma. -->

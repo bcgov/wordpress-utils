@@ -4,14 +4,30 @@
  *
  * @author  WordPress <govwordpress@gov.bc.ca>
  * @license https://opensource.org/licenses/MIT MIT
+ * @package bcgov/wordpress-composer-scripts
  */
+
 namespace Bcgov\Script;
 
 use Composer\Script\Event;
 use Composer\Util\ProcessExecutor;
+/**
+ * Class Standards
+ *
+ * Provides utility methods for running WordPress coding standards checks and fixes,
+ * as well as npm command execution for development workflows. This class is designed
+ * to be used with Composer scripts to automate code quality checks in WordPress
+ * theme and plugin development.
+ *
+ * The class integrates with PHP_CodeSniffer (phpcs) and PHP Code Beautifier and Fixer (phpcbf)
+ * to enforce WordPress coding standards, and provides npm command execution capabilities
+ * for frontend build processes.
+ *
+ * @package wordpress-utils
+ * @since 1.0.0
+ */
+class Standards {
 
-class Standards
-{
 
 
     /**
@@ -21,10 +37,8 @@ class Standards
      *
      * @return int
      */
-    public static function phpcs(Event $event): int
-    {
-        return self::phpWordPressCodingStandards($event);
-
+    public static function phpcs( Event $event ): int {
+        return self::phpWordPressCodingStandards( $event );
     }//end phpcs()
 
 
@@ -35,10 +49,8 @@ class Standards
      *
      * @return int
      */
-    public static function phpcbf(Event $event): int
-    {
-        return self::phpWordPressCodingStandards($event, true);
-
+    public static function phpcbf( Event $event ): int {
+        return self::phpWordPressCodingStandards( $event, true );
     }//end phpcbf()
 
 
@@ -50,30 +62,28 @@ class Standards
      *
      * @return int
      */
-    public static function phpWordPressCodingStandards(Event $event, bool $fix=false): int
-    {
+    public static function phpWordPressCodingStandards( Event $event, bool $fix = false ): int {
         $config    = $event->getComposer()->getConfig();
-        $vendorDir = ($config->get('vendor-dir'));
-        $phpcs     = escapeshellarg("{$vendorDir}/bin/phpcs");
-        $phpcbf    = escapeshellarg("{$vendorDir}/bin/phpcbf");
-        $source    = escapeshellarg("{$vendorDir}/../");
+        $vendorDir = ( $config->get( 'vendor-dir' ) );
+        $phpcs     = escapeshellarg( "{$vendorDir}/bin/phpcs" );
+        $phpcbf    = escapeshellarg( "{$vendorDir}/bin/phpcbf" );
+        $source    = escapeshellarg( "{$vendorDir}/../" );
         $io        = $event->getIO();
-        $process   = new ProcessExecutor($io);
+        $process   = new ProcessExecutor( $io );
         $result    = 0;
         $sniffs    = '';
 
-        if (($event->getName() === 'production') || ($event->getName()) === 'checklist') {
-            $sniffs .= "--exclude=Generic.Commenting.Todo";
+        if ( ( $event->getName() === 'production' ) || ( $event->getName() ) === 'checklist' ) {
+            $sniffs .= '--exclude=Generic.Commenting.Todo';
         }
 
-        if ($fix) {
-            $result = $process->execute("{$phpcbf} -ps --standard=./vendor/bcgov/wordpress-utils/wordpress.xml --colors {$source}");
+        if ( $fix ) {
+            $result = $process->execute( "{$phpcbf} -ps --standard=./vendor/bcgov/wordpress-utils/wordpress.xml --colors {$source}" );
         } else {
-            $result = $process->execute("{$phpcs} -ps --standard=./vendor/bcgov/wordpress-utils/wordpress.xml  --colors {$sniffs} {$source}");
+            $result = $process->execute( "{$phpcs} -ps --standard=./vendor/bcgov/wordpress-utils/wordpress.xml  --colors {$sniffs} {$source}" );
         }
 
         return $result;
-
     }//end phpWordPressCodingStandards()
 
 
@@ -86,12 +96,10 @@ class Standards
      *
      * @return integer
      */
-    public static function npm(Event $event, string $cmd, bool $silent=false): int
-    {
+    public static function npm( Event $event, string $cmd, bool $silent = false ): int {
         $io       = $event->getIO();
-        $process  = new ProcessExecutor($io);
+        $process  = new ProcessExecutor( $io );
         $redirect = $silent ? '&>/dev/null' : '';
-        return $process->execute("npm run {$cmd} {$redirect}");
+        return $process->execute( "npm run {$cmd} {$redirect}" );
     }//end npm()
-
 }//end class
