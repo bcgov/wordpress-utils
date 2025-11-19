@@ -1,0 +1,10 @@
+name: PHPCS Validation
+permissions:
+  contents: read
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+jobs:
+  phpcs-validation:
+    uses: bcgov/des-git-workflows/.github/workflows/phpcs-validate.yml@1.1.0

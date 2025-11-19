@@ -38,17 +38,18 @@ class Checklists
     /**
      * Checklist for post production skipping phpunit execution.
      *
-     * @param Event $event Gets triggered when run from a composer script.
+     * @param  Event $event Gets triggered when run from a composer script.
      * @return void
      */
-    public static function postProductionChecksSkipPhpunit(Event $event) {
+    public static function postProductionChecksSkipPhpunit(Event $event)
+    {
         self::postProductionChecks($event, true);
     }
 
     /**
      * Checklist for post production.
      *
-     * @param Event $event Gets triggered when run from a composer script.
+     * @param Event $event        Gets triggered when run from a composer script.
      * @param bool  $skip_phpunit Whether to skip phpunit execution.
      *
      * @return void
