@@ -33,6 +33,10 @@
         ],
         "checklist": [
             "Bcgov\\Script\\Checklists::postProductionChecksForScripts"
+        ],
+        "phpcs-allow-todo": [
+            "./vendor/bin/phpcs --config-set error_severity 1 -i;",
+            "./vendor/bin/phpcs -ps --colors --exclude=Generic.Commenting.Todo;"
         ]
     },
     "bin" : ["bin/scan-wp-patterns.php"],
