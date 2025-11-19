@@ -1,7 +1,22 @@
 <?php
-$directory           = './patterns'; // This has to go up
-$img_failures        = []; // Array to hold failures for <img src>.
-$href_failures       = []; // Array to hold failures for <a href>.
+/**
+ * Scan WordPress Patterns Script
+ *
+ * This script scans PHP files in the './patterns' directory for potential issues in HTML tags:
+ * - <img> tags with src attributes that do not contain 'php' (indicating missing dynamic content).
+ * - <a> tags with href attributes containing 'localhost' (indicating development URLs that should be replaced).
+ *
+ * It reports the total files scanned, passed/failed counts, and lists specific failures with file paths and line numbers.
+ * Exits with a non-zero code if any failures are found, suitable for CI/CD integration.
+ *
+ * @author  WordPress <govwordpress@gov.bc.ca>
+ * @license https://opensource.org/licenses/MIT MIT
+ * @package Bcgov\Script
+ */
+
+$directory           = './patterns'; // This has to go up.
+$img_failures        = array(); // Array to hold failures for <img src>.
+$href_failures       = array(); // Array to hold failures for <a href>.
 $total_files_scanned = 0; // Total number of files scanned.
 $passed_checks       = 0; // Number of files that passed checks.
 $failed_checks       = 0; // Number of files that failed checks.
