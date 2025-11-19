@@ -22,7 +22,7 @@
             "./vendor/bin/phpcs;"
         ],
         "phpcbf": [
-            "./vendor/bin/phpcbf -ps --colors;"
+            "./vendor/bin/phpcbf;"
         ],
         "test": [
             "./vendor/bin/phpunit"

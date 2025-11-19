@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <ruleset name="PHP Coding Standards based custom ruleset for the wordpress-utils repo">
+
 	<description>These are the coding standards ONLY FOR THIS REPO!</description>
+
 	<!-- What to scan -->
 	<file>.</file>
 
@@ -21,7 +23,7 @@
 	<arg name="error-severity" value="1"/> <!-- Set error severity to 1 -->
 	<config name="testVersion" value="7.4-"/> <!-- Specify the PHP version to test against -->
 
-	<!-- Rule exceptions for this repo-->
-	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent.SpacesUsed" ><severity>0</severity></rule>
-	<rule ref="Generic.WhiteSpace.DisallowTabIndent"><type>warning</type><severity>0</severity></rule>
+	<!-- Base standard -->
+	<rule ref="PEAR"/>
+
 </ruleset>

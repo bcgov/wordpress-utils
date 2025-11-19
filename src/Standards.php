@@ -23,7 +23,7 @@ use Composer\Util\ProcessExecutor;
  * for frontend build processes.
  *
  * @package wordpress-utils
- * @since 1.0.0
+ * @since   1.0.0
  */
 class Standards
 {
