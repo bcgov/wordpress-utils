@@ -10,6 +10,21 @@ namespace Bcgov\Script;
 use Composer\Script\Event;
 use Composer\Util\ProcessExecutor;
 
+/**
+ * Class Standards
+ *
+ * Provides utility methods for running WordPress coding standards checks and fixes,
+ * as well as npm command execution for development workflows. This class is designed
+ * to be used with Composer scripts to automate code quality checks in WordPress
+ * theme and plugin development.
+ *
+ * The class integrates with PHP_CodeSniffer (phpcs) and PHP Code Beautifier and Fixer (phpcbf)
+ * to enforce WordPress coding standards, and provides npm command execution capabilities
+ * for frontend build processes.
+ *
+ * @package wordpress-utils
+ * @since 1.0.0
+ */
 class Standards
 {
 

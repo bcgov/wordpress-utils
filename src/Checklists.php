@@ -11,6 +11,27 @@ use Composer\Script\Event;
 use Bcgov\Script\Standards;
 use Bcgov\Script\Tests;
 
+/**
+ * Checklists class for managing post-production checks and validations.
+ *
+ * This class provides functionality to run automated checks for code quality,
+ * testing, and linting before production deployment. It creates interactive
+ * checklists and generates checklist.md files for tracking completion status.
+ *
+ * The class supports various types of checks including:
+ * - PHP coding standards (phpcs)
+ * - PHP unit tests
+ * - JavaScript linting
+ * - CSS linting
+ * - JavaScript tests
+ *
+ * It also provides interactive prompts for manual verification items like
+ * version updates, changelog updates, and documentation requirements.
+ *
+ * @package wordpress-utils
+ * @author  WordPress <govwordpress@gov.bc.ca>
+ * @since   1.0.0
+ */
 class Checklists
 {
 
