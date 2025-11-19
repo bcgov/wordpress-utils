@@ -19,8 +19,7 @@
     },
     "scripts": {
         "phpcs": [
-            "./vendor/bin/phpcs --config-set error_severity 1 -i;",
-            "./vendor/bin/phpcs -ps --colors;"
+            "./vendor/bin/phpcs;"
         ],
         "phpcbf": [
             "./vendor/bin/phpcbf -ps --colors;"
@@ -35,7 +34,7 @@
             "Bcgov\\Script\\Checklists::postProductionChecksForScripts"
         ],
         "phpcs-allow-todo": [
-            "./vendor/bin/phpcs -ps --colors --exclude=Generic.Commenting.Todo;"
+            "./vendor/bin/phpcs --exclude=Generic.Commenting.Todo;"
         ]
     },
     "bin" : ["bin/scan-wp-patterns.php"],
