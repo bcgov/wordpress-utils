@@ -3,6 +3,10 @@
 
 	<description>These are BCGov Coding Standards ONLY FOR WORDPRESS PLUGINS AND THEMES</description>
 
+	<!-- Configuration for running phpcs on this repo -->
+	<arg value="sp"/> <!-- Show sniff and progress -->
+	<arg name="colors"/> <!-- Enable colors in the output -->
+
 	<!-- Exclude the Composer Vendor directory. -->
 	<exclude-pattern>/vendor/*</exclude-pattern>
 

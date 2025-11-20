@@ -2,3 +2,4 @@ vendor
 .phpunit*
 coverage
 .DS_Store
+.vscode

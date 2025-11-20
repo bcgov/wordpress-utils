@@ -2,8 +2,15 @@
 /**
  * Composer Scripts
  *
- * @author  WordPress <govwordpress@gov.bc.ca>
- * @license https://opensource.org/licenses/MIT MIT
+ * PHP version 7.4
+ *
+ * @category Scripts
+ * @package  Standards
+ * @author   WordPress <govwordpress@gov.bc.ca>
+ * @license  https://opensource.org/licenses/MIT MIT
+ * @version  GIT: 1.0.0
+ * @link     https://github.com/bcgov/wordpress-utils
+ * @since    1.0.0
  */
 namespace Bcgov\Script;
 
@@ -18,19 +25,24 @@ use Composer\Util\ProcessExecutor;
  * to be used with Composer scripts to automate code quality checks in WordPress
  * theme and plugin development.
  *
- * The class integrates with PHP_CodeSniffer (phpcs) and PHP Code Beautifier and Fixer (phpcbf)
- * to enforce WordPress coding standards, and provides npm command execution capabilities
- * for frontend build processes.
+ * The class integrates with PHP_CodeSniffer (phpcs)
+ * and PHP Code Beautifier and Fixer (phpcbf)
+ * to enforce WordPress coding standards, and provides
+ * npm command execution capabilities for frontend build processes.
  *
- * @package wordpress-utils
- * @since   1.0.0
+ * @category Scripts
+ * @package  Standards
+ * @author   WordPress <govwordpress@gov.bc.ca>
+ * @license  https://opensource.org/licenses/MIT MIT
+ * @link     https://github.com/bcgov/wordpress-utils
  */
 class Standards
 {
 
 
     /**
-     * Performs WordPress theme and plugin coding standards based on WordPress's coding standards.
+     * Performs WordPress theme and plugin coding standards based on
+     * WordPress's coding standards.
      *
      * @param \Composer\Script\Event $event The composer event.
      *
@@ -44,7 +56,8 @@ class Standards
 
 
     /**
-     * Performs WordPress theme and plugin coding standards fixed based on WordPress's coding standards.
+     * Performs WordPress theme and plugin coding standards fixed
+     * based on WordPress's coding standards.
      *
      * @param \Composer\Script\Event $event The composer event.
      *
@@ -58,15 +71,18 @@ class Standards
 
 
     /**
-     * WordPress coding standards helper function to setup installed paths for WordPress coding standards, plus does check or fix.
+     * WordPress coding standards helper function to setup installed paths
+     * for WordPress coding standards, plus does check or fix.
      *
      * @param \Composer\Script\Event $event The composer event.
      * @param boolean                $fix   Fix issues flag.
      *
      * @return int
      */
-    public static function phpWordPressCodingStandards(Event $event, bool $fix=false): int
-    {
+    public static function phpWordPressCodingStandards(
+        Event $event,
+        bool $fix = false
+    ): int {
         $config    = $event->getComposer()->getConfig();
         $vendorDir = ($config->get('vendor-dir'));
         $phpcs     = escapeshellarg("{$vendorDir}/bin/phpcs");
@@ -76,15 +92,20 @@ class Standards
         $process   = new ProcessExecutor($io);
         $result    = 0;
         $sniffs    = '';
+        $args      = '--standard=./vendor/bcgov/wordpress-utils/wordpress.xml';
 
-        if (($event->getName() === 'production') || ($event->getName()) === 'checklist') {
+        if (($event->getName() === 'production')
+            || (($event->getName()) === 'checklist')
+        ) {
             $sniffs .= "--exclude=Generic.Commenting.Todo";
         }
 
         if ($fix) {
-            $result = $process->execute("{$phpcbf} -ps --standard=./vendor/bcgov/wordpress-utils/wordpress.xml --colors {$source}");
+            $result = $process->execute("{$phpcbf} {$args} {$source}");
         } else {
-            $result = $process->execute("{$phpcs} -ps --standard=./vendor/bcgov/wordpress-utils/wordpress.xml  --colors {$sniffs} {$source}");
+            $result = $process->execute(
+                "{$phpcs} {$args} {$sniffs} {$source}"
+            );
         }
 
         return $result;
