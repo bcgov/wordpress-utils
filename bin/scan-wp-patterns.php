@@ -41,7 +41,7 @@ $reset  = "\033[0m"; // Reset to default color.
  *
  * @return void
  */
-function checkFiles( $dir )
+function checkFiles($dir)
 {
     global $img_failures, $href_failures, $total_files_scanned,
         $passed_checks, $failed_checks;

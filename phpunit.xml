@@ -5,7 +5,7 @@
       <directory>./</directory>
     </include>
     <exclude>
-        <directory>./tests/</directory>
+        <directory>./src/Tests/</directory>
         <directory>./vendor</directory>
     </exclude>
   </coverage>
@@ -14,7 +14,7 @@
   </php>
   <testsuites>
     <testsuite name="WordPress Common Test Suite">
-      <directory>./tests/</directory>
+      <directory>./src/Tests/</directory>
     </testsuite>
   </testsuites>
 </phpunit>
