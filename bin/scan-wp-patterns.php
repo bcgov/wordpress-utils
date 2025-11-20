@@ -2,16 +2,22 @@
 /**
  * Scan WordPress Patterns Script
  *
- * This script scans PHP files in the './patterns' directory for potential issues in HTML tags:
- * - <img> tags with src attributes that do not contain 'php' (indicating missing dynamic content).
- * - <a> tags with href attributes containing 'localhost' (indicating development URLs that should be replaced).
+ * This script scans PHP files in './patterns' directory for HTML tag issues:
+ * - <img> tags with src attributes missing 'php' (missing dynamic content).
+ * - <a> tags with href attributes containing 'localhost' (dev URLs).
  *
- * It reports the total files scanned, passed/failed counts, and lists specific failures with file paths and line numbers.
- * Exits with a non-zero code if any failures are found, suitable for CI/CD integration.
+ * Reports total files scanned, pass/fail counts, and lists failures with
+ * file paths and line numbers. Exits non-zero if failures found for CI/CD.
  *
- * @author  WordPress <govwordpress@gov.bc.ca>
- * @license https://opensource.org/licenses/MIT MIT
- * @package Bcgov\Script
+ * PHP version 7.4
+ *
+ * @category Scripts
+ * @package  ScanWPPatterns
+ * @author   WordPress <govwordpress@gov.bc.ca>
+ * @license  https://opensource.org/licenses/MIT MIT
+ * @version  GIT: 1.0.0
+ * @link     https://github.com/bcgov/wordpress-utils
+ * @since    1.0.0
  */
 
 $directory           = './patterns'; // This has to go up.
@@ -32,10 +38,13 @@ $reset  = "\033[0m"; // Reset to default color.
  * Check files in the specified directory for <img> and <a> tag issues.
  *
  * @param string $dir The directory to scan.
+ *
+ * @return void
  */
-function check_files( $dir )
+function checkFiles( $dir )
 {
-    global $img_failures, $href_failures, $total_files_scanned, $passed_checks, $failed_checks; // Use global variables.
+    global $img_failures, $href_failures, $total_files_scanned,
+        $passed_checks, $failed_checks;
     $files = scandir($dir);
     foreach ( $files as $file ) {
         if ('.' === $file || '..' === $file ) { // Yoda condition.
@@ -45,29 +54,31 @@ function check_files( $dir )
         $file_path = $dir . DIRECTORY_SEPARATOR . $file; // Construct the file path.
 
         if (is_dir($file_path) ) {
-            check_files($file_path); // Recursively check directories.
-        } elseif ('php' === pathinfo($file_path, PATHINFO_EXTENSION) ) { // Yoda condition.
+            checkFiles($file_path); // Recursively check directories.
+        } elseif ('php' === pathinfo($file_path, PATHINFO_EXTENSION) ) {
             ++$total_files_scanned; // Increment total files scanned.
             $lines       = file($file_path); // Read the file into an array of lines.
             $file_passed = true; // Assume the file passes unless a failure is found.
+            $regexp_img   = '/<img[^>]+src="([^"]*)"/';
+            $regexp_a     = '/<a[^>]+href="([^"]*)"/';
 
-            foreach ( $lines as $line_number => $line_content ) {
+            foreach ( $lines as $lNum => $line_content ) {
                 // Check for <img> tags in the current line.
-                if (preg_match('/<img[^>]+src="([^"]*)"/', $line_content, $matches) ) {
+                if (preg_match($regexp_img, $line_content, $matches) ) {
                     // Check if the src contains PHP.
-                    if (false === strpos($matches[1], 'php') ) { // Yoda condition.
-                        // If src does not contain PHP, add to img_failures with line number.
-                        $img_failures[] = "$file_path (Line " . ( $line_number + 1 ) . ')';
+                    if (false === strpos($matches[1], 'php') ) {
+                        // Add to img_failures with line number.
+                        $img_failures[] = "$file_path (Line " . ( $lNum + 1 ) . ')';
                         $file_passed    = false; // Mark the file as failed.
                     }
                 }
 
                 // Check for <a> tags in the current line.
-                if (preg_match('/<a[^>]+href="([^"]*)"/', $line_content, $matches) ) {
+                if (preg_match($regexp_a, $line_content, $matches) ) {
                     // Check if the href contains localhost.
-                    if (false !== strpos($matches[1], 'localhost') ) { // Yoda condition.
-                        // If href contains localhost, add to href_failures with line number.
-                        $href_failures[] = "$file_path (Line " . ( $line_number + 1 ) . ')';
+                    if (false !== strpos($matches[1], 'localhost') ) {
+                        // Add to href_failures with line number.
+                        $href_failures[] = "$file_path (Line " . ( $lNum + 1 ) . ')';
                         $file_passed     = false; // Mark the file as failed.
                     }
                 }
@@ -82,30 +93,28 @@ function check_files( $dir )
     }
 }
 
-check_files($directory); // Start checking files.
+checkFiles($directory); // Start checking files.
 
 // Report results.
-echo 'Total files scanned: ' . esc_html($total_files_scanned) . "\n"; // Escape output for security.
-echo esc_html($green) . 'Files passed: ' . esc_html($passed_checks) . esc_html($reset) . "\n"; // Escape output for security.
-echo esc_html($red) . 'Files failed: ' . esc_html($failed_checks) . esc_html($reset) . "\n"; // Escape output for security.
+echo 'Total files scanned: ' . escHtml($total_files_scanned) . "\n";
+echo $green . 'Files passed: ' . escHtml($passed_checks) . $reset . "\n";
+echo $red . 'Files failed: ' . escHtml($failed_checks) . $reset . "\n";
 
 if (! empty($img_failures) || ! empty($href_failures) ) {
-    echo esc_html($yellow) . 'Failed files:' . esc_html($reset) . "\n"; // Indicate failed files.
+    echo $yellow . 'Failed files:' . $reset . "\n";
 
-    // Check for <img> failures.
     if (! empty($img_failures) ) {
-        echo esc_html($yellow) . 'Missing PHP in <img src>:' . esc_html($reset) . "\n"; // Indicate missing PHP in <img src>.
+        echo $yellow . 'Missing PHP in <img src>:' . $reset . "\n";
         foreach ( $img_failures as $failure ) {
-            echo esc_html($orange) . esc_html($failure) . esc_html($reset) . "\n"; // Print img failures in orange and escape output.
+            echo $orange . escHtml($failure) . $reset . "\n";
         }
-        echo "\n"; // New line for separation.
+        echo "\n";
     }
 
-    // Check for <a> failures.
     if (! empty($href_failures) ) {
-        echo esc_html($yellow) . "Containing 'localhost' in <a href>:" . esc_html($reset) . "\n"; // Indicate localhost in <a href>.
+        echo $yellow . "Containing 'localhost' in <a href>:" . $reset . "\n";
         foreach ( $href_failures as $failure ) {
-            echo esc_html($orange) . esc_html($failure) . esc_html($reset) . "\n"; // Print href failures in orange and escape output.
+            echo $orange . escHtml($failure) . $reset . "\n";
         }
     }
 }
@@ -122,10 +131,11 @@ if ($failed_checks > 0 ) {
 /**
  * Escape output for security.
  *
- * @param  string $str The string to escape.
+ * @param string $str The string to escape.
+ *
  * @return string Escaped string.
  */
-function esc_html( $str )
+function escHtml( $str )
 {
     return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
 }

@@ -2,8 +2,15 @@
 /**
  * Composer Scripts
  *
- * @author  WordPress <govwordpress@gov.bc.ca>
- * @license https://opensource.org/licenses/MIT MIT
+ * PHP version 7.4
+ *
+ * @category Scripts
+ * @package  Checklists
+ * @author   WordPress <govwordpress@gov.bc.ca>
+ * @license  https://opensource.org/licenses/MIT MIT
+ * @version  GIT: 1.0.0
+ * @link     https://github.com/bcgov/wordpress-utils
+ * @since    1.0.0
  */
 namespace Bcgov\Script;
 
@@ -28,9 +35,12 @@ use Bcgov\Script\Tests;
  * It also provides interactive prompts for manual verification items like
  * version updates, changelog updates, and documentation requirements.
  *
- * @package wordpress-utils
- * @author  WordPress <govwordpress@gov.bc.ca>
- * @since   1.0.0
+ * @category Scripts
+ * @package  Checklists
+ * @author   WordPress <govwordpress@gov.bc.ca>
+ * @license  https://opensource.org/licenses/MIT MIT
+ * @link     https://github.com/bcgov/wordpress-utils
+ * @since    1.0.0
  */
 class Checklists
 {
@@ -38,7 +48,8 @@ class Checklists
     /**
      * Checklist for post production skipping phpunit execution.
      *
-     * @param  Event $event Gets triggered when run from a composer script.
+     * @param Event $event Gets triggered when run from a composer script.
+     *
      * @return void
      */
     public static function postProductionChecksSkipPhpunit(Event $event)
@@ -54,30 +65,44 @@ class Checklists
      *
      * @return void
      */
-    public static function postProductionChecks(Event $event, bool $skip_phpunit = false): void
-    {
+    public static function postProductionChecks(
+        Event $event,
+        bool $skip_phpunit = false
+    ): void {
         $io            = $event->getIO();
-        $checklistFile = ($event->getComposer()->getConfig()->get('vendor-dir').'/../checklist.md');
+        $checklistFile = ($event->getComposer()->getConfig()->get('vendor-dir') .
+            '/../checklist.md');
         $success       = true;
 
         // This is the default checklist, which is not automatically checked.
         $checklist = [];
-        // These are the automatic checks, eventually other items like version might be incorporated.
+        // These are the automatic checks.
+        // Eventually other items like version might be incorporated.
         $checks = [
-            'phpcs'   => 'PHP Coding standards failed, no errors or warnings allowed, exceptions can be removed by using this comment //phpcs:ignore',
+            'phpcs'   => 'PHP Coding standards failed, ' .
+                'no errors or warnings allowed, ' .
+                'exceptions can be removed by using this comment //phpcs:ignore',
             'phpUnit' => 'PHP Unit tests failed.',
             'lintJs'  => 'Javascript linting failed.',
             'lintCss' => 'Style linting failed.',
             'testJs'  => 'Javascript tests failed.',
         ];
-        // If checklist is not created via production script, give warning to ensure composer production.
+
+        // If checklist is not created via production script, give warning
+        // to ensure composer production.
         if ($event->getName() !== 'production') {
-            $io->write(self::console('Ensure that you run `composer production`', 'warning'));
+            $io->write(
+                self::console(
+                    'Ensure that you run `composer production`',
+                    'warning'
+                )
+            );
         }
 
         // Creates a checklist.md file in the theme or plugin root.
         $io->write(self::console("\nCreating checklist.md...\n"));
-        // Loops through all the items, and will break if any of them fail, in order not to waste the devs time.
+        // Loops through all the items.
+        // Will break if any of them fail, to save developer time.
         foreach ($checks as $check => $errorMsg) {
             $result = 0;
             $item   = '';
@@ -87,7 +112,7 @@ class Checklists
             } elseif ($check === 'phpUnit') {
                 if ($skip_phpunit) {
                     $result = 0;
-                    $item = '* [N/A] Skipped PHP tests';
+                    $item   = '* [N/A] Skipped PHP tests';
                 } else {
                     $result = Tests::phpunit($event, true);
                     $item   = '* [%s] Run PHP tests';
@@ -103,17 +128,23 @@ class Checklists
                 $item   = '* [%s] Javascript Tests';
             }
 
-            // This ensures that one of the conditions are meet, in order to add the checklist item.
-            if (! empty($item)) {
-                $checkType     = self::getCheckmarkType($result);
+            // Ensure conditions are met before adding the checklist item.
+            if (!empty($item)) {
+                $checkType     = self::_getCheckmarkType($result);
                 $checklistItem = sprintf($item, $checkType);
                 $checklist[]   = $checklistItem;
                 $io->write(self::console($checklistItem));
             }
 
-            // A 0 result means passed, > 0 failed.
+            // Check result: 0 = success/passed, any value > 0 = failure
             if ($result > 0) {
-                $io->write(self::console("*** FAIL ***\nTests Failed on {$check} please fix issues and re-run\n{$errorMsg}\n", 'error'));
+                $io->write(
+                    self::console(
+                        "*** FAIL ***\nTests Failed on {$check} " .
+                            "please fix issues and re-run\n{$errorMsg}\n",
+                        'error'
+                    )
+                );
                 $success = false;
                 break;
             }
@@ -125,35 +156,74 @@ class Checklists
                 'no'  => 'no',
             ];
             $confirm       = (object) [
-                'style'         => $io->select('Is your version in your style.css or plugin file the correct version? (Default Yes)', $selectChoices, 'yes'),
-                'changelog'     => $io->select('Did you update the CHANGELOG.md to include jira tickets? (Default Yes)', $selectChoices, 'yes'),
-                'readme'        => $io->select('Update README.md if applicable? (Default No)', $selectChoices, 'no'),
-                'assets'        => $io->select('Built assets if applicable? (Default Yes)', $selectChoices, 'yes'),
-                'documentation' => $io->select('Does/did documentation need to be updated? (Default No)', $selectChoices, 'no'),
+                'style'         => $io->select(
+                    'Is your version in your style.css or plugin file ' .
+                        'the correct version? (Default Yes)',
+                    $selectChoices,
+                    'yes'
+                ),
+                'changelog'     => $io->select(
+                    'Did you update the CHANGELOG.md ' .
+                        'to include jira tickets? (Default Yes)',
+                    $selectChoices,
+                    'yes'
+                ),
+                'readme'        => $io->select(
+                    'Update README.md if applicable? (Default No)',
+                    $selectChoices,
+                    'no'
+                ),
+                'assets'        => $io->select(
+                    'Built assets if applicable? (Default Yes)',
+                    $selectChoices,
+                    'yes'
+                ),
+                'documentation' => $io->select(
+                    'Does/did documentation need to be updated? (Default No)',
+                    $selectChoices,
+                    'no'
+                ),
             ];
             // If documentation needs to be updated, is a new JIRA ticket needed?
             if ($confirm->documentation === 'yes') {
-                $confirm->newTicketNeeded = $io->select('Is a separate ticket required for the documentation? (Default No)', $selectChoices, 'no');
+                $confirm->newTicketNeeded = $io->select(
+                    'Is a separate ticket required ' .
+                        'for the documentation? (Default No)',
+                    $selectChoices,
+                    'no'
+                );
             }
+
             // If a new ticket is needed, we need to get the ticket ID.
-            if (isset($confirm->newTicketNeeded) && $confirm->newTicketNeeded === 'yes') {
+            if ((isset($confirm->newTicketNeeded)) 
+                && ($confirm->newTicketNeeded === 'yes')
+            ) {
                 $confirm->newTicketId = $io->ask('Please enter the ticket ID: ');
             }
-            // Now we can determine the value of $confirm->documentation (either 'N/A', 'Updated', or a ticket ID).
+
+            // Now we can determine the value of $confirm->documentation
+            // (either 'N/A', 'Updated', or a ticket ID).
             if ($confirm->documentation === 'no') {
                 $confirm->documentation = 'N/A';
-            } elseif ($confirm->documentation === 'yes' && isset($confirm->newTicketNeeded) && $confirm->newTicketNeeded === 'no') {
+            } elseif ($confirm->documentation === 'yes'
+                && isset($confirm->newTicketNeeded)
+                && $confirm->newTicketNeeded === 'no'
+            ) {
                 $confirm->documentation = 'Updated';
             } else {
                 $confirm->documentation = $confirm->newTicketId;
             }
             $checklist = array_merge(
                 [
-                    "* [{$confirm->style}] Updated version in style.css or plugin file",
-                    "* [{$confirm->changelog}] Updated CHANGELOG.md to include jira ticket",
+                    "* [{$confirm->style}] Updated version in style.css " .
+                        "or plugin file",
+                    "* [{$confirm->changelog}] Updated CHANGELOG.md " .
+                        "to include jira ticket",
                     "* [{$confirm->readme}] Updated README.md for new functionality",
-                    "* [{$confirm->assets}] Built assets for production (npm run build:production)",
-                    "* [{$confirm->documentation}] Updated the documentation (N/A, Updated, or a ticket ID)",
+                    "* [{$confirm->assets}] Built assets for production " .
+                        "(npm run build:production)",
+                    "* [{$confirm->documentation}] Updated the documentation " .
+                        "(N/A, Updated, or a ticket ID)",
                 ],
                 $checklist
             );
@@ -178,7 +248,7 @@ class Checklists
      *
      * @return string
      */
-    private static function getCheckmarkType(int $status): string
+    private static function _getCheckmarkType(int $status): string
     {
         $output = 'Fail';
         if ($status === 0) {
@@ -187,7 +257,7 @@ class Checklists
 
         return $output;
 
-    }//end getCheckmarkType()
+    }//end _getCheckmarkType()
 
 
     /**
@@ -223,10 +293,11 @@ class Checklists
 
 
     /**
-     * Helper console function that returns formatted messages for the Composer\IO\IOInterface.
+     * Returns formatted messages for the Composer\IO\IOInterface.
      *
      * @param string $msg     The message.
-     * @param string $msgType The message type, in order to wrap text, see $logLevels for allowed.
+     * @param string $msgType The message type, in order to wrap text,
+     *                        see $logLevels for allowed.
      *
      * @return string
      */
