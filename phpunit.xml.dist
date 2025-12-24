@@ -19,16 +19,16 @@
 >
     <coverage>
         <include>
-            <directory>src</directory>
-            <directory>Blocks/src</directory>
+            <directory>../../../src</directory>
+            <directory>../../../Blocks/src</directory>
         </include>
         <exclude>
-            <directory>vendor</directory>
+            <directory>../../../vendor</directory>
         </exclude>
     </coverage>
     <testsuites>
         <testsuite name="WordPress integration tests">
-            <directory prefix="test-" suffix=".php">./tests</directory>
+            <directory prefix="test-" suffix=".php">../../../tests</directory>
         </testsuite>
     </testsuites>
 </phpunit>
