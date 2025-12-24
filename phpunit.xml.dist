@@ -1,15 +1,34 @@
 <?xml version="1.0"?>
+
+<!--
+    WordPress integration test configuration
+
+    Use this file if you are running WordPress integration tests (no mocks, tests extending
+    WP_TestCase).
+
+    See: https://make.wordpress.org/cli/handbook/how-to/plugin-unit-tests/
+-->
+
 <phpunit
-	bootstrap="tests/bootstrap.php"
-	backupGlobals="false"
-	colors="true"
-	convertErrorsToExceptions="true"
-	convertNoticesToExceptions="true"
-	convertWarningsToExceptions="true"
-	>
-	<testsuites>
-		<testsuite name="testing">
-			<directory prefix="test-" suffix=".php">../../../tests</directory>
-		</testsuite>
-	</testsuites>
+    bootstrap="tests/bootstrap.php"
+    backupGlobals="false"
+    colors="true"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+>
+    <coverage>
+        <include>
+            <directory>src</directory>
+            <directory>Blocks/src</directory>
+        </include>
+        <exclude>
+            <directory>vendor</directory>
+        </exclude>
+    </coverage>
+    <testsuites>
+        <testsuite name="WordPress integration tests">
+            <directory prefix="test-" suffix=".php">../../../tests</directory>
+        </testsuite>
+    </testsuites>
 </phpunit>
