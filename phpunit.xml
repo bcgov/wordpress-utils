@@ -1,20 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd" backupGlobals="false" colors="true" bootstrap="vendor/autoload.php" failOnRisky="true" failOnWarning="true">
-  <coverage>
-    <include>
-      <directory>./</directory>
-    </include>
-    <exclude>
-        <directory>./src/Tests/</directory>
-        <directory>./vendor</directory>
-    </exclude>
-  </coverage>
-  <php>
-    <ini name="error_reporting" value="-1"/>
-  </php>
-  <testsuites>
-    <testsuite name="WordPress Common Test Suite">
-      <directory>./src/Tests/</directory>
-    </testsuite>
-  </testsuites>
+
+<!--
+    WordPress unit test configuration
+
+    Use this file if you are running WordPress unit tests (Brain/Monkey mocks, tests extending
+    CommonTestCase).
+-->
+
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+    bootstrap="vendor/autoload.php"
+    backupGlobals="false"
+    colors="true"
+    failOnRisky="true"
+    failOnWarning="true"
+>
+    <coverage>
+        <include>
+            <directory>./</directory>
+        </include>
+        <exclude>
+            <directory>./src/Tests/</directory>
+            <directory>./vendor</directory>
+        </exclude>
+    </coverage>
+    <php>
+        <ini name="error_reporting" value="-1" />
+    </php>
+    <testsuites>
+        <testsuite name="WordPress unit tests">
+            <directory>./src/Tests/</directory>
+        </testsuite>
+    </testsuites>
 </phpunit>
